@@ -548,6 +548,29 @@ main {
   opacity: 0.94;
 }
 
+.hero-media.is-static-loop .hero-video-poster {
+  opacity: 0.96;
+  animation: staticHeroPosterFloat 5200ms ease-in-out infinite;
+}
+
+.hero-media.is-static-loop::before {
+  animation: heroGlowPulse 4200ms ease-in-out infinite;
+}
+
+.hero-media.is-static-loop::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 13% 8% 8%;
+  border-radius: 46%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(96, 123, 255, 0.12), transparent 42%),
+    conic-gradient(from 0deg, transparent 0deg, rgba(96, 123, 255, 0.16) 72deg, transparent 148deg, rgba(242, 90, 168, 0.12) 236deg, transparent 360deg);
+  filter: blur(8px);
+  opacity: 0.72;
+  animation: staticHeroHaloSpin 9600ms linear infinite;
+}
+
 .orbit {
   position: absolute;
   inset: 11% 5%;
@@ -1935,6 +1958,23 @@ main {
   50% {
     opacity: 1;
     scale: 1.03;
+  }
+}
+
+@keyframes staticHeroPosterFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0) scale(1.018);
+  }
+}
+
+@keyframes staticHeroHaloSpin {
+  to {
+    transform: rotate(360deg);
   }
 }
 

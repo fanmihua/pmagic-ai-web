@@ -216,21 +216,38 @@ document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
   const markVideoReady = () => {
     media?.classList.add("is-video-ready");
     media?.classList.remove("is-video-unavailable");
+    media?.classList.remove("is-static-loop");
   };
   const markVideoUnavailable = () => {
     video.pause();
     media?.classList.remove("is-video-ready");
     media?.classList.add("is-video-unavailable");
   };
+  const markStaticLoop = () => {
+    markVideoUnavailable();
+    media?.classList.add("is-static-loop");
+    video.removeAttribute("src");
+    video.querySelectorAll("source").forEach((source) => {
+      source.dataset.src = source.getAttribute("src") || "";
+      source.removeAttribute("src");
+    });
+    video.load();
+    video.remove();
+  };
   const syncFallbackClass = () => {
     video.classList.toggle("is-fallback-video", /\.mp4(?:$|\?)/.test(video.currentSrc));
   };
   const playMutedVideo = () => {
     if (prefersStaticHeroMedia) {
-      markVideoUnavailable();
+      markStaticLoop();
       return;
     }
     if (document.visibilityState !== "visible") return;
+    video.preload = "metadata";
+    video.querySelectorAll("source[data-src]").forEach((source) => {
+      source.setAttribute("src", source.dataset.src);
+    });
+    video.load();
     video.play().then(markVideoReady).catch(markVideoUnavailable);
   };
 
@@ -240,7 +257,6 @@ document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
     if (!video.ended) markVideoUnavailable();
   });
   video.addEventListener("error", markVideoUnavailable);
-  video.addEventListener("loadeddata", playMutedVideo, { once: true });
   document.addEventListener("visibilitychange", playMutedVideo);
   syncFallbackClass();
   playMutedVideo();
