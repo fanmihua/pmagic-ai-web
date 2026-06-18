@@ -522,6 +522,19 @@ main {
   transition: opacity 220ms ease;
 }
 
+.hero-video-poster,
+.hero-video.is-fallback-video {
+  mix-blend-mode: multiply;
+  -webkit-mask-image:
+    radial-gradient(ellipse at 50% 52%, #000 0 48%, rgba(0, 0, 0, 0.88) 60%, rgba(0, 0, 0, 0.38) 76%, transparent 91%),
+    linear-gradient(90deg, transparent 0%, #000 9%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(ellipse at 50% 52%, #000 0 48%, rgba(0, 0, 0, 0.88) 60%, rgba(0, 0, 0, 0.38) 76%, transparent 91%),
+    linear-gradient(90deg, transparent 0%, #000 9%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+}
+
 .hero-video {
   opacity: 0;
   pointer-events: none;
@@ -529,10 +542,7 @@ main {
 
 .hero-video.is-fallback-video {
   border-radius: 36%;
-  mix-blend-mode: multiply;
-  filter: saturate(1.08) contrast(1.03);
-  -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 0 68%, rgba(0, 0, 0, 0.76) 78%, transparent 95%);
-  mask-image: radial-gradient(circle at 50% 48%, #000 0 68%, rgba(0, 0, 0, 0.76) 78%, transparent 95%);
+  filter: brightness(1.03) saturate(1.06) contrast(1.02);
 }
 
 .hero-video-poster {
