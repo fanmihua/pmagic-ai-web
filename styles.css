@@ -141,24 +141,53 @@ img {
   justify-self: center;
   display: flex;
   align-items: center;
-  gap: clamp(24px, 4.6vw, 64px);
+  gap: clamp(16px, 2.6vw, 38px);
   color: var(--text);
   font-size: 14px;
   font-weight: 500;
 }
 
 .nav-links a {
+  position: relative;
   display: inline-flex;
-  transition: color 160ms ease;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 2px;
+  border-radius: 999px;
+  transition: color 160ms ease, background 160ms ease;
 }
 
 .nav-links a:hover,
 .nav-links a:focus-visible {
+  color: var(--primary);
+  background: rgba(96, 123, 255, 0.07);
+}
+
+.nav-links a.is-active {
   color: transparent;
   background: linear-gradient(90deg, var(--primary-deep), var(--primary-bright));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 18px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary-deep), var(--primary-bright));
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0.4);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.nav-links a.is-active::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
 }
 
 .nav-links a:focus-visible {
@@ -545,17 +574,23 @@ main {
 
 .hero-frame .agent-tag {
   opacity: 0;
+  gap: 8px;
   translate: 0 10px;
   animation:
-    heroEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards,
-    heroTagDrift 4600ms ease-in-out infinite;
+    heroEnter 480ms cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    agentBubbleFloat 5200ms ease-in-out infinite;
 }
 
-.hero-frame .tag-procurement { animation-delay: 720ms, 1400ms; }
-.hero-frame .tag-bim { animation-delay: 800ms, 1600ms; }
-.hero-frame .tag-weighing { animation-delay: 880ms, 1800ms; }
-.hero-frame .tag-finance { animation-delay: 960ms, 2000ms; }
-.hero-frame .tag-wechat { animation-delay: 1040ms, 2200ms; }
+.hero-frame .agent-tag .line-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.hero-frame .tag-procurement { animation-delay: 560ms, 1200ms; }
+.hero-frame .tag-bim { animation-delay: 620ms, 1400ms; }
+.hero-frame .tag-weighing { animation-delay: 680ms, 1600ms; }
+.hero-frame .tag-finance { animation-delay: 740ms, 1800ms; }
+.hero-frame .tag-wechat { animation-delay: 800ms, 2000ms; }
 
 .tag-procurement { top: 18%; left: 2%; }
 .tag-bim { top: 31%; right: -5%; }
@@ -595,35 +630,35 @@ main {
 .metrics-section.is-in-view .metric-card,
 .metrics-section.is-in-view .section-title,
 .metrics-section.is-in-view .pain-card {
-  animation: sectionItemEnter 680ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: sectionItemEnter 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.metrics-section.is-in-view .metric-card:nth-child(1) { animation-delay: 40ms; }
-.metrics-section.is-in-view .metric-card:nth-child(2) { animation-delay: 120ms; }
-.metrics-section.is-in-view .metric-card:nth-child(3) { animation-delay: 200ms; }
-.metrics-section.is-in-view .metric-card:nth-child(4) { animation-delay: 280ms; }
+.metrics-section.is-in-view .metric-card:nth-child(1) { animation-delay: 20ms; }
+.metrics-section.is-in-view .metric-card:nth-child(2) { animation-delay: 70ms; }
+.metrics-section.is-in-view .metric-card:nth-child(3) { animation-delay: 120ms; }
+.metrics-section.is-in-view .metric-card:nth-child(4) { animation-delay: 170ms; }
 
 .metrics-section.is-in-view .metric-card strong {
-  animation: metricValuePop 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: metricValuePop 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.metrics-section.is-in-view .metric-card:nth-child(1) strong { animation-delay: 220ms; }
-.metrics-section.is-in-view .metric-card:nth-child(2) strong { animation-delay: 300ms; }
-.metrics-section.is-in-view .metric-card:nth-child(3) strong { animation-delay: 380ms; }
-.metrics-section.is-in-view .metric-card:nth-child(4) strong { animation-delay: 460ms; }
+.metrics-section.is-in-view .metric-card:nth-child(1) strong { animation-delay: 140ms; }
+.metrics-section.is-in-view .metric-card:nth-child(2) strong { animation-delay: 190ms; }
+.metrics-section.is-in-view .metric-card:nth-child(3) strong { animation-delay: 240ms; }
+.metrics-section.is-in-view .metric-card:nth-child(4) strong { animation-delay: 290ms; }
 
 .metrics-section.is-in-view .mini-asset img {
-  animation: metricAssetLift 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: metricAssetLift 540ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .metrics-section.is-in-view .section-title {
-  animation-delay: 420ms;
+  animation-delay: 260ms;
 }
 
-.metrics-section.is-in-view .pain-card:nth-child(1) { animation-delay: 540ms; }
-.metrics-section.is-in-view .pain-card:nth-child(2) { animation-delay: 620ms; }
-.metrics-section.is-in-view .pain-card:nth-child(3) { animation-delay: 700ms; }
-.metrics-section.is-in-view .pain-card:nth-child(4) { animation-delay: 780ms; }
+.metrics-section.is-in-view .pain-card:nth-child(1) { animation-delay: 340ms; }
+.metrics-section.is-in-view .pain-card:nth-child(2) { animation-delay: 390ms; }
+.metrics-section.is-in-view .pain-card:nth-child(3) { animation-delay: 440ms; }
+.metrics-section.is-in-view .pain-card:nth-child(4) { animation-delay: 490ms; }
 
 .metrics-section.is-in-view .pain-icon {
   animation: painIconPop 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -885,7 +920,7 @@ main {
 .architecture-section.motion-ready .section-title,
 .architecture-section.motion-ready .architecture-core-logo,
 .architecture-section.motion-ready .architecture-visual .agent-tag,
-.architecture-section.motion-ready .layer-card {
+.architecture-section.motion-ready .layer-list {
   opacity: 0;
   translate: 0 18px;
   scale: 0.985;
@@ -895,24 +930,25 @@ main {
 .architecture-section.is-in-view .section-title,
 .architecture-section.is-in-view .architecture-core-logo,
 .architecture-section.is-in-view .architecture-visual .agent-tag,
-.architecture-section.is-in-view .layer-card {
-  animation: sectionItemEnter 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.architecture-section.is-in-view .layer-list {
+  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.architecture-section.is-in-view .section-title { animation-delay: 40ms; }
-.architecture-section.is-in-view .architecture-core-logo { animation-delay: 180ms; }
-.architecture-section.is-in-view .architecture-visual .arch-top { animation-delay: 320ms; }
-.architecture-section.is-in-view .architecture-visual .arch-left { animation-delay: 400ms; }
-.architecture-section.is-in-view .architecture-visual .arch-right { animation-delay: 480ms; }
-.architecture-section.is-in-view .architecture-visual .arch-finance { animation-delay: 560ms; }
-.architecture-section.is-in-view .architecture-visual .arch-wechat { animation-delay: 640ms; }
-.architecture-section.is-in-view .architecture-visual .arch-bottom { animation-delay: 720ms; }
+.architecture-section.is-in-view .section-title { animation-delay: 20ms; }
+.architecture-section.is-in-view .architecture-core-logo { animation-delay: 100ms; }
+.architecture-section.is-in-view .architecture-visual .agent-tag {
+  animation:
+    sectionItemEnter 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    agentBubbleFloat 5600ms ease-in-out infinite;
+}
+.architecture-section.is-in-view .architecture-visual .arch-top { animation-delay: 180ms, 1100ms; }
+.architecture-section.is-in-view .architecture-visual .arch-left { animation-delay: 230ms, 1300ms; }
+.architecture-section.is-in-view .architecture-visual .arch-right { animation-delay: 280ms, 1500ms; }
+.architecture-section.is-in-view .architecture-visual .arch-finance { animation-delay: 330ms, 1700ms; }
+.architecture-section.is-in-view .architecture-visual .arch-wechat { animation-delay: 380ms, 1900ms; }
+.architecture-section.is-in-view .architecture-visual .arch-bottom { animation-delay: 430ms, 2100ms; }
 
-.architecture-section.is-in-view .layer-card:nth-child(1) { animation-delay: 360ms; }
-.architecture-section.is-in-view .layer-card:nth-child(2) { animation-delay: 440ms; }
-.architecture-section.is-in-view .layer-card:nth-child(3) { animation-delay: 520ms; }
-.architecture-section.is-in-view .layer-card:nth-child(4) { animation-delay: 600ms; }
-.architecture-section.is-in-view .layer-card:nth-child(5) { animation-delay: 680ms; }
+.architecture-section.is-in-view .layer-list { animation-delay: 180ms; }
 
 .architecture-section.is-in-view .architecture-core-logo {
   animation-name: architectureCoreEnter;
@@ -920,10 +956,6 @@ main {
 
 .architecture-section.is-in-view .architecture-visual .orbit {
   animation: orbitPulse 5200ms ease-in-out infinite, architectureOrbitWake 900ms ease-out 180ms both;
-}
-
-.architecture-section.is-in-view .layer-icon {
-  animation: layerIconGlow 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .architecture-grid {
@@ -1080,6 +1112,22 @@ main {
   padding: 8px 0 58px;
 }
 
+.modules-section.motion-ready .section-title,
+.modules-section.motion-ready .module-grid {
+  opacity: 0;
+  translate: 0 18px;
+  scale: 0.985;
+  filter: blur(8px);
+}
+
+.modules-section.is-in-view .section-title,
+.modules-section.is-in-view .module-grid {
+  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modules-section.is-in-view .section-title { animation-delay: 20ms; }
+.modules-section.is-in-view .module-grid { animation-delay: 90ms; }
+
 .module-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1146,6 +1194,30 @@ main {
 
 .case-section {
   padding: 0 0 48px;
+}
+
+.case-section.motion-ready .section-title,
+.case-section.motion-ready .case-card {
+  opacity: 0;
+  translate: 0 18px;
+  filter: blur(8px);
+}
+
+.case-section.motion-ready .timeline::before {
+  scale: 0 1;
+  transform-origin: left center;
+}
+
+.case-section.is-in-view .section-title,
+.case-section.is-in-view .case-card {
+  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.case-section.is-in-view .section-title { animation-delay: 20ms; }
+.case-section.is-in-view .case-card { animation-delay: 90ms; }
+
+.case-section.is-in-view .timeline::before {
+  animation: timelineLineDraw 520ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
 }
 
 .case-card {
@@ -1317,6 +1389,22 @@ main {
   padding: 0 0 58px;
 }
 
+.whitepaper-section.motion-ready .whitepaper-head,
+.whitepaper-section.motion-ready .whitepaper-grid {
+  opacity: 0;
+  translate: 0 18px;
+  scale: 0.985;
+  filter: blur(8px);
+}
+
+.whitepaper-section.is-in-view .whitepaper-head,
+.whitepaper-section.is-in-view .whitepaper-grid {
+  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.whitepaper-section.is-in-view .whitepaper-head { animation-delay: 20ms; }
+.whitepaper-section.is-in-view .whitepaper-grid { animation-delay: 100ms; }
+
 .whitepaper-panel {
   padding: 42px 42px 38px;
   border-radius: var(--radius-xl);
@@ -1467,6 +1555,17 @@ main {
 
 .final-section {
   padding: 0 0 46px;
+}
+
+.final-section.motion-ready .final-cta {
+  opacity: 0;
+  translate: 0 18px;
+  scale: 0.985;
+  filter: blur(8px);
+}
+
+.final-section.is-in-view .final-cta {
+  animation: finalPanelEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) 20ms forwards;
 }
 
 .final-cta {
@@ -1677,17 +1776,31 @@ main {
   }
 }
 
-@keyframes layerIconGlow {
+@keyframes timelineLineDraw {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes finalPanelEnter {
   0% {
     opacity: 0;
-    scale: 0.9;
-    filter: blur(4px);
+    translate: 0 18px;
+    scale: 0.985;
+    filter: blur(8px);
+    background-position: 0% 50%, 0% 50%, 100% 50%;
   }
 
   100% {
     opacity: 1;
+    translate: 0 0;
     scale: 1;
-    filter: drop-shadow(0 8px 14px rgba(96, 123, 255, 0.08));
+    filter: blur(0);
+    background-position: 100% 50%, 100% 50%, 0% 50%;
   }
 }
 
@@ -1783,14 +1896,14 @@ main {
   }
 }
 
-@keyframes heroTagDrift {
+@keyframes agentBubbleFloat {
   0%,
   100% {
-    translate: 0 0;
+    margin-top: 0;
   }
 
   50% {
-    translate: 0 -5px;
+    margin-top: -5px;
   }
 }
 
@@ -1924,7 +2037,35 @@ main {
   .nav-links a {
     width: 100%;
     padding: 12px 6px;
+    border-radius: 14px;
     border-top: 1px solid rgba(96, 125, 182, 0.12);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    color: var(--primary);
+    background: rgba(96, 123, 255, 0.07);
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .nav-links a.is-active {
+    color: var(--primary-deep);
+    background: transparent;
+    background-clip: initial;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .nav-links a::after {
+    left: 0;
+    bottom: 50%;
+    width: 3px;
+    height: 18px;
+    transform: translateY(50%) scaleY(0.4);
+  }
+
+  .nav-links a.is-active::after {
+    transform: translateY(50%) scaleY(1);
   }
 
   .nav-shell.is-open .nav-links {
@@ -2181,8 +2322,8 @@ main {
   }
 
   .hero-frame .agent-tag .line-icon {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
   }
 
   .tag-procurement {

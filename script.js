@@ -2,6 +2,7 @@ const header = document.querySelector("[data-header]");
 const navShell = document.querySelector(".nav-shell");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
+const navLinks = nav ? Array.from(nav.querySelectorAll('a[href^="#"]')) : [];
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function setHeaderState() {
@@ -11,6 +12,72 @@ function setHeaderState() {
 window.addEventListener("scroll", setHeaderState, { passive: true });
 setHeaderState();
 
+const navTargets = navLinks
+  .map((link) => {
+    const hash = link.getAttribute("href");
+    const target = hash ? document.querySelector(hash) : null;
+    return hash && target ? { hash, link, target } : null;
+  })
+  .filter(Boolean);
+
+function setActiveNav(hash) {
+  navTargets.forEach(({ hash: targetHash, link }) => {
+    const isActive = targetHash === hash;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "location");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+function getCurrentNavHash() {
+  if (!navTargets.length) return null;
+
+  const headerOffset = header?.offsetHeight || 0;
+  if (window.scrollY <= headerOffset + 16) return "#position";
+
+  const hashTarget = navTargets.find(({ hash }) => hash === window.location.hash);
+
+  if (hashTarget) {
+    const rect = hashTarget.target.getBoundingClientRect();
+    const isHashTargetVisible = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+    if (isHashTargetVisible) return hashTarget.hash;
+  }
+
+  const activationOffset = Math.min(220, Math.max(120, window.innerHeight * 0.28));
+  const probeY = window.scrollY + headerOffset + activationOffset;
+  let currentHash = navTargets[0].hash;
+
+  navTargets.forEach(({ hash, target }) => {
+    if (target.offsetTop <= probeY) {
+      currentHash = hash;
+    }
+  });
+
+  return currentHash;
+}
+
+let navTicking = false;
+
+function syncActiveNav() {
+  const currentHash = getCurrentNavHash();
+  if (currentHash) setActiveNav(currentHash);
+  navTicking = false;
+}
+
+function requestActiveNavSync() {
+  if (navTicking) return;
+  navTicking = true;
+  window.requestAnimationFrame(syncActiveNav);
+}
+
+window.addEventListener("scroll", requestActiveNavSync, { passive: true });
+window.addEventListener("resize", requestActiveNavSync);
+window.addEventListener("hashchange", () => setActiveNav(window.location.hash || getCurrentNavHash()));
+setActiveNav(window.location.hash || getCurrentNavHash());
+
 menuToggle?.addEventListener("click", () => {
   const isOpen = navShell.classList.toggle("is-open");
   menuToggle.setAttribute("aria-expanded", String(isOpen));
@@ -18,7 +85,9 @@ menuToggle?.addEventListener("click", () => {
 });
 
 nav?.addEventListener("click", (event) => {
-  if (event.target instanceof HTMLAnchorElement) {
+  const link = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
+  if (link instanceof HTMLAnchorElement) {
+    setActiveNav(link.getAttribute("href"));
     navShell.classList.remove("is-open");
     menuToggle?.setAttribute("aria-expanded", "false");
     menuToggle?.setAttribute("aria-label", "打开导航");
@@ -31,7 +100,6 @@ const interactiveSelectors = [
   ".layer-card",
   ".module-card",
   ".final-cta",
-  ".case-stats div",
   ".btn"
 ].join(",");
 
@@ -60,7 +128,9 @@ if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
   });
 }
 
-const motionSections = document.querySelectorAll(".metrics-section, .architecture-section");
+const motionSections = document.querySelectorAll(
+  ".metrics-section, .architecture-section, .modules-section, .case-section, .whitepaper-section, .final-section"
+);
 
 if (!prefersReducedMotion && "IntersectionObserver" in window) {
   const sectionObserver = new IntersectionObserver(
@@ -71,7 +141,7 @@ if (!prefersReducedMotion && "IntersectionObserver" in window) {
         sectionObserver.unobserve(entry.target);
       });
     },
-    { rootMargin: "0px 0px -18% 0px", threshold: 0.16 }
+    { rootMargin: "0px 0px 18% 0px", threshold: 0.08 }
   );
 
   motionSections.forEach((section) => {
