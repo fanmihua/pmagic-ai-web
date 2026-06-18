@@ -2133,14 +2133,22 @@ main {
   .actions,
   .paper-actions {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
     width: 100%;
   }
 
   .btn {
     width: 100%;
     min-height: 44px;
-    padding: 0 18px;
+    padding: 0 12px;
+    gap: 7px;
+    font-size: 13px;
+  }
+
+  .btn .icon-arrow {
+    width: 16px;
+    height: 16px;
   }
 
   .hero-frame {
