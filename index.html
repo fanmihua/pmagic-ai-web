@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Pmagic AI 建工管理矩阵 OS，以多 Agent 协同编排采购、过磅、BIM、财务与企业微信协同。"
+    />
+    <title>Pmagic AI 建工管理矩阵 OS</title>
+    <link rel="icon" href="assets/images/pmagic-logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="theme-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#816fff" />
+          <stop offset="100%" stop-color="#607bff" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <header class="site-header" data-header>
+      <div class="nav-shell">
+        <a class="brand" href="#top" aria-label="Pmagic AI 首页">
+          <img class="brand-logo" src="assets/images/pmagic-logo.svg" alt="Pmagic AI" />
+        </a>
+
+        <button class="menu-toggle" type="button" aria-label="打开导航" aria-expanded="false" data-menu-toggle>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="nav-links" aria-label="主导航" data-nav>
+          <a href="#position">产品定位</a>
+          <a href="#agents">多 Agent 架构</a>
+          <a href="#capabilities">核心能力</a>
+          <a href="#case">客户案例</a>
+        </nav>
+
+        <a class="btn btn-primary nav-cta" href="#demo">预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero section" id="position" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="product-pill">
+              <span class="mini-orbit" aria-hidden="true"></span>
+              盈象 AI 建工管理矩阵 OS
+            </div>
+            <h1 id="hero-title"><span class="hero-line">建工领域专属的</span><span>超级工程大脑</span></h1>
+            <p>
+              以多 Agent 协同架构，打通采购、过磅、BIM、财务与企业微信协同，
+              让工程管理从人工经验驱动升级为数据智能驱动。
+            </p>
+            <div class="actions">
+              <a class="btn btn-primary" href="#demo">预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a class="btn btn-secondary" href="#agents">查看更多 Agent 架构<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+            </div>
+          </div>
+
+          <div class="hero-visual asset-frame hero-frame" data-asset-label="Hero 3D 工程大脑">
+            <div class="hero-media" aria-label="Pmagic AI 工程大脑 3D 动态标志">
+              <img class="hero-video-poster" src="assets/images/hero-brain-poster.png" alt="" aria-hidden="true" />
+              <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-brain-poster.png" data-autoplay-video>
+                <source src="assets/videos/hero-brain-core-alpha.webm" type="video/webm" />
+                <source src="assets/videos/hero-brain-core.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <span class="orb orb-a"></span>
+            <span class="orb orb-b"></span>
+            <span class="orb orb-c"></span>
+            <div class="agent-tag tag-procurement"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#shopping-cart"></use></svg>智慧采购 Agent</div>
+            <div class="agent-tag tag-bim"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#box"></use></svg>BIM 预测 Agent</div>
+            <div class="agent-tag tag-weighing"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#scale"></use></svg>过磅防作弊 Agent</div>
+            <div class="agent-tag tag-finance"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#yen"></use></svg>智能财务 Agent</div>
+            <div class="agent-tag tag-wechat"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg>企业微信协同 Agent</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section metrics-section" aria-label="核心指标与传统痛点">
+        <div class="container">
+          <div class="metric-grid">
+            <article class="metric-card">
+              <div>
+                <h3>采购响应</h3>
+                <strong>26<span>h</span></strong>
+                <p>供需深度偏差全链路响应，比原计划提前 38 小时。</p>
+              </div>
+              <div class="asset-frame mini-asset" data-asset-label="采购响应图">
+                <img src="assets/images/metric-procurement.png" alt="采购响应效率提升" />
+                <div class="visual-placeholder"><span>metric</span></div>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div>
+                <h3>成本降低</h3>
+                <strong>2.1<span>%</span></strong>
+                <p>智能比价与供应链推荐，项目采购成本可控。</p>
+              </div>
+              <div class="asset-frame mini-asset" data-asset-label="成本降低图">
+                <img src="assets/images/metric-cost.png" alt="成本降低" />
+                <div class="visual-placeholder"><span>metric</span></div>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div>
+                <h3>核算周期</h3>
+                <strong class="metric-cycle-value">月<span>→</span>天</strong>
+                <p>把月度核算升级为日级结算，利项风险提前暴露。</p>
+              </div>
+              <div class="asset-frame mini-asset" data-asset-label="核算周期图">
+                <img src="assets/images/metric-cycle.png" alt="核算周期缩短" />
+                <div class="visual-placeholder"><span>metric</span></div>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div>
+                <h3>BIM 预测</h3>
+                <strong>40<span>%</span></strong>
+                <p>材料计划准确率提升，减少停工待料与库存积压。</p>
+              </div>
+              <div class="asset-frame mini-asset" data-asset-label="BIM 预测图">
+                <img src="assets/images/metric-bim.png" alt="BIM 预测" />
+                <div class="visual-placeholder"><span>metric</span></div>
+              </div>
+            </article>
+          </div>
+
+          <h2 class="section-title">传统建工管理的四大黑箱，正在拖慢项目节奏</h2>
+          <div class="pain-grid">
+            <article class="pain-card">
+              <img class="pain-icon" src="assets/images/pain-progress.png" alt="" aria-hidden="true" />
+              <div>
+                <h3>进度黑箱</h3>
+                <p>计划与现场脱节，进度滞后无法及时预警。</p>
+              </div>
+            </article>
+            <article class="pain-card">
+              <img class="pain-icon" src="assets/images/pain-materials.png" alt="" aria-hidden="true" />
+              <div>
+                <h3>材料黑箱</h3>
+                <p>材料需求不明，浪费严重，缺料与积压并存。</p>
+              </div>
+            </article>
+            <article class="pain-card">
+              <img class="pain-icon" src="assets/images/pain-cost.png" alt="" aria-hidden="true" />
+              <div>
+                <h3>成本黑箱</h3>
+                <p>成本核算滞后，超支风险难以及时发现。</p>
+              </div>
+            </article>
+            <article class="pain-card">
+              <img class="pain-icon" src="assets/images/pain-collaboration.png" alt="" aria-hidden="true" />
+              <div>
+                <h3>协同黑箱</h3>
+                <p>跨部门信息不通，决策链长，执行效率低下。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section architecture-section" id="agents" aria-labelledby="architecture-title">
+        <div class="container">
+          <h2 class="section-title" id="architecture-title">一个工程大脑中枢，编排多个业务 Agent</h2>
+          <div class="architecture-grid">
+            <div class="asset-frame architecture-visual" data-asset-label="架构区工程大脑">
+              <img class="architecture-core-logo" src="assets/images/logo-3d.png" alt="多业务 Agent 编排架构" />
+              <div class="visual-placeholder"><span>logo-3d.png</span></div>
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <span class="agent-connector connector-top" aria-hidden="true"></span>
+              <span class="agent-connector connector-left" aria-hidden="true"></span>
+              <span class="agent-connector connector-right" aria-hidden="true"></span>
+              <span class="agent-connector connector-bottom" aria-hidden="true"></span>
+              <span class="agent-connector connector-finance" aria-hidden="true"></span>
+              <span class="agent-connector connector-wechat" aria-hidden="true"></span>
+              <div class="agent-tag arch-top"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#shopping-cart"></use></svg>智慧采购 Agent</div>
+              <div class="agent-tag arch-left"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#scale"></use></svg>过磅防作弊 Agent</div>
+              <div class="agent-tag arch-right"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#box"></use></svg>BIM 预测 Agent</div>
+              <div class="agent-tag arch-bottom"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#chart"></use></svg>经营决策 Agent</div>
+              <div class="agent-tag arch-finance"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#yen"></use></svg>智能财务 Agent</div>
+              <div class="agent-tag arch-wechat"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg>企业微信协同 Agent</div>
+            </div>
+
+            <div class="layer-list">
+              <article class="layer-card">
+                <img class="layer-icon" src="assets/images/layer-data-matrix.png" alt="" aria-hidden="true" />
+                <div>
+                  <h3>数据矩阵层</h3>
+                  <p>项目、合同、材料、设备、财务与职能数据统一治理。</p>
+                </div>
+              </article>
+              <article class="layer-card">
+                <img class="layer-icon" src="assets/images/layer-intelligence-analysis.png" alt="" aria-hidden="true" />
+                <div>
+                  <h3>智能分析层</h3>
+                  <p>需求识别、趋势预测、成本预警和风险评分构建闭环。</p>
+                </div>
+              </article>
+              <article class="layer-card">
+                <img class="layer-icon" src="assets/images/layer-agent-orchestration.png" alt="" aria-hidden="true" />
+                <div>
+                  <h3>Agent 编排层</h3>
+                  <p>按需分配、调用能力，分派最合适的 Agent 执行任务。</p>
+                </div>
+              </article>
+              <article class="layer-card">
+                <img class="layer-icon" src="assets/images/layer-business-execution.png" alt="" aria-hidden="true" />
+                <div>
+                  <h3>业务执行层</h3>
+                  <p>采购、财务、过磅、BIM、协同流程一体化闭环。</p>
+                </div>
+              </article>
+              <article class="layer-card">
+                <img class="layer-icon" src="assets/images/layer-audit-control.png" alt="" aria-hidden="true" />
+                <div>
+                  <h3>审计管控层</h3>
+                  <p>全链路可追溯、实时合规，覆盖与经营管理升级。</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section modules-section" id="capabilities" aria-labelledby="modules-title">
+        <div class="container">
+          <h2 class="section-title" id="modules-title">五大智能模块，打造建工管理全流程闭环</h2>
+          <div class="module-grid">
+            <article class="module-card">
+              <h3>智慧采购</h3>
+              <div class="asset-frame module-asset" data-asset-label="智慧采购">
+                <img src="assets/images/module-procurement.png" alt="智慧采购" />
+                <div class="visual-placeholder"><span>module-procurement.png</span></div>
+              </div>
+              <ul>
+                <li>需求识别与计划生成</li>
+                <li>智能比价与供应商推荐</li>
+                <li>在线询比价与合同管理</li>
+              </ul>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+            </article>
+            <article class="module-card">
+              <h3>过磅防作弊</h3>
+              <div class="asset-frame module-asset" data-asset-label="过磅防作弊">
+                <img src="assets/images/module-weighing.png" alt="过磅防作弊" />
+                <div class="visual-placeholder"><span>module-weighing.png</span></div>
+              </div>
+              <ul>
+                <li>AI 识别异常过磅行为</li>
+                <li>车牌识别与磅差联动</li>
+                <li>数据留痕与过程固化</li>
+              </ul>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+            </article>
+            <article class="module-card">
+              <h3>智能财务</h3>
+              <div class="asset-frame module-asset" data-asset-label="智能财务">
+                <img src="assets/images/module-finance.png" alt="智能财务" />
+                <div class="visual-placeholder"><span>module-finance.png</span></div>
+              </div>
+              <ul>
+                <li>合同、票据、付款自动归集</li>
+                <li>成本分摊与预算监控</li>
+                <li>利润风险预警与分析</li>
+              </ul>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+            </article>
+            <article class="module-card">
+              <h3>企业微信 AI Agent</h3>
+              <div class="asset-frame module-asset" data-asset-label="企业微信 AI Agent">
+                <img src="assets/images/module-wechat-agent.png" alt="企业微信 AI Agent" />
+                <div class="visual-placeholder"><span>module-wechat-agent.png</span></div>
+              </div>
+              <ul>
+                <li>审批、通知、预警一站触达</li>
+                <li>项目群智能问答</li>
+                <li>移动协同与反馈闭环</li>
+              </ul>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+            </article>
+            <article class="module-card">
+              <h3>BIM 预测材料需求</h3>
+              <div class="asset-frame module-asset" data-asset-label="BIM 预测">
+                <img src="assets/images/module-bim-cube.png" alt="BIM 预测材料需求" />
+                <div class="visual-placeholder"><span>module-bim-cube.png</span></div>
+              </div>
+              <ul>
+                <li>基于 BIM 模型预测需求</li>
+                <li>材料计划与需用联动</li>
+                <li>缺料预警与替代方案推荐</li>
+              </ul>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section case-section" id="case" aria-labelledby="case-title">
+        <div class="container">
+          <h2 class="section-title" id="case-title">从真实项目中验证的智能闭环</h2>
+          <div class="case-card">
+            <div class="asset-frame case-image" data-asset-label="案例楼盘图">
+              <img src="assets/images/case-city.webp" alt="湖州织东控规单元项目" />
+              <div class="visual-placeholder"><span>case-city.webp</span></div>
+            </div>
+            <div class="case-content">
+              <div class="case-heading">
+                <h3>湖州织东控规单元项目</h3>
+                <span>真实案例</span>
+              </div>
+              <p>
+                项目总规划面积约 15 万㎡，正处于主供货的施工高峰期，
+                对钢筋等主材的供应要求很高。
+              </p>
+              <p>
+                Pmagic AI 建工管理矩阵 OS 通过多 Agent 协同，快速完成采购全流程任务，
+                保障现场施工不断档。
+              </p>
+              <div class="case-stats">
+                <div><span>全流程</span><strong>26 小时</strong><small>完成采购全链路</small></div>
+                <div><span>提前</span><strong>38 小时</strong><small>比原计划提前</small></div>
+                <div><span>成本下降</span><strong>2.1%</strong><small>采购成本降低</small></div>
+                <div><span>间接损失减少</span><strong>8 万元</strong><small>停工损失降低</small></div>
+              </div>
+              <ol class="timeline">
+                <li><span></span><b>需求识别</b><small>0h</small></li>
+                <li><span></span><b>供应商匹配</b><small>2h</small></li>
+                <li><span></span><b>在线询比价</b><small>6h</small></li>
+                <li><span></span><b>合同签署</b><small>10h</small></li>
+                <li><span></span><b>过磅追踪</b><small>24h</small></li>
+                <li><span></span><b>保供闭环</b><small>26h</small></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section whitepaper-section" aria-labelledby="whitepaper-title">
+        <div class="container">
+          <div class="whitepaper-panel">
+            <div class="whitepaper-head">
+              <h2 id="whitepaper-title">浏览建工 AI 白皮书</h2>
+              <p>系统了解多 Agent 架构、材料闭环、成本预测与企业微信协同的落地方法。</p>
+            </div>
+            <div class="whitepaper-grid">
+              <div class="asset-frame books-asset" data-asset-label="白皮书书本">
+                <img src="assets/images/whitepaper-books-cover.png" alt="Pmagic AI 建工管理矩阵 OS 白皮书 2026" />
+                <div class="visual-placeholder"><span>whitepaper-books-cover.png</span></div>
+              </div>
+              <div class="paper-cards">
+                <article class="paper-card">
+                  <span class="bookmark" aria-hidden="true"></span>
+                  <h3>多 Agent 架构指南</h3>
+                  <p>了解多 Agent 架构的设计原则与落地路径。</p>
+                  <div class="asset-frame paper-preview" data-asset-label="多 Agent 架构指南">
+                    <img src="assets/images/whitepaper-agent-orchestrator.jpg" alt="多 Agent 架构指南预览" />
+                    <div class="visual-placeholder"><span>whitepaper-agent-orchestrator.jpg</span></div>
+                  </div>
+                  <div class="paper-actions">
+                    <a class="btn btn-small btn-secondary" href="#whitepaper-title">在线浏览</a>
+                    <a class="btn btn-small btn-primary" href="#whitepaper-title">下载白皮书</a>
+                  </div>
+                </article>
+                <article class="paper-card">
+                  <span class="bookmark" aria-hidden="true"></span>
+                  <h3>智慧采购与过磅闭环</h3>
+                  <p>从采购到过磅的全流程协同，实现数据闭环与风险切控。</p>
+                  <div class="asset-frame paper-preview" data-asset-label="采购闭环">
+                    <img src="assets/images/whitepaper-procurement-loop.jpg" alt="智慧采购与过磅闭环预览" />
+                    <div class="visual-placeholder"><span>whitepaper-procurement-loop.jpg</span></div>
+                  </div>
+                  <div class="paper-actions">
+                    <a class="btn btn-small btn-secondary" href="#whitepaper-title">在线浏览</a>
+                    <a class="btn btn-small btn-primary" href="#whitepaper-title">下载白皮书</a>
+                  </div>
+                </article>
+                <article class="paper-card">
+                  <span class="bookmark" aria-hidden="true"></span>
+                  <h3>项目成本预测实践</h3>
+                  <p>基于数据与 AI 的成本预测模型助项目降本增效。</p>
+                  <div class="asset-frame paper-preview" data-asset-label="成本预测">
+                    <img src="assets/images/whitepaper-cost-forecast.jpg" alt="项目成本预测实践预览" />
+                    <div class="visual-placeholder"><span>whitepaper-cost-forecast.jpg</span></div>
+                  </div>
+                  <div class="paper-actions">
+                    <a class="btn btn-small btn-secondary" href="#whitepaper-title">在线浏览</a>
+                    <a class="btn btn-small btn-primary" href="#whitepaper-title">下载白皮书</a>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section final-section" id="demo" aria-labelledby="demo-title">
+        <div class="container">
+          <div class="final-cta">
+            <div>
+              <h2 id="demo-title">让你的项目进入智能管理时代</h2>
+              <p>Pmagic AI 建工管理矩阵 OS，助力企业降本增效，赢在未来。</p>
+              <div class="actions">
+                <a class="btn btn-primary" href="mailto:service@pmagic.ai">预约产品演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+                <a class="btn btn-secondary" href="mailto:service@pmagic.ai">获取解决方案<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              </div>
+            </div>
+            <div class="asset-frame city-asset" data-asset-label="底部城市光效">
+              <img src="assets/images/cta-management-dashboard.png" alt="智能管理时代项目管理界面" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top" aria-label="Pmagic AI 首页">
+            <img class="brand-logo" src="assets/images/pmagic-logo.svg" alt="Pmagic AI" />
+          </a>
+          <p>盈象 AI 建工管理 OS，建工领域专属的超级工程大脑，以多 Agent 协同驱动企业管理从经验走向智能。</p>
+          <div class="socials" aria-label="社交链接">
+            <a href="#" aria-label="微信"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg></a>
+            <a href="#" aria-label="社区"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#users"></use></svg></a>
+            <a href="#" aria-label="视频"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#play"></use></svg></a>
+          </div>
+          <small>© 2026 Pmagic AI. All rights reserved.</small>
+        </div>
+        <div class="footer-col">
+          <h3>产品</h3>
+          <a href="#position">产品定位</a>
+          <a href="#agents">多 Agent 架构</a>
+          <a href="#capabilities">核心能力</a>
+          <a href="#demo">版本与定价</a>
+        </div>
+        <div class="footer-col">
+          <h3>核心模块</h3>
+          <a href="#capabilities">智慧采购</a>
+          <a href="#capabilities">过磅防作弊</a>
+          <a href="#capabilities">智能财务</a>
+          <a href="#capabilities">企业微信 AI Agent</a>
+          <a href="#capabilities">BIM 预测材料需求</a>
+        </div>
+        <div class="footer-col">
+          <h3>场景</h3>
+          <a href="#case">采购管理</a>
+          <a href="#case">现场管理</a>
+          <a href="#case">成本管理</a>
+          <a href="#case">财务管理</a>
+          <a href="#case">协同办公</a>
+        </div>
+        <div class="footer-col">
+          <h3>资源</h3>
+          <a href="#whitepaper-title">白皮书</a>
+          <a href="#case">客户案例</a>
+          <a href="#whitepaper-title">帮助中心</a>
+          <a href="#whitepaper-title">更新日志</a>
+        </div>
+        <div class="footer-col">
+          <h3>联系</h3>
+          <a href="mailto:service@pmagic.ai">预约演示</a>
+          <a href="mailto:service@pmagic.ai">商务合作</a>
+          <a href="tel:4008889999">400-888-9999</a>
+          <a href="mailto:service@pmagic.ai">service@pmagic.ai</a>
+          <p class="footer-legal">隐私政策 ｜ 服务条款 ｜ 数据安全</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
