@@ -4,6 +4,16 @@ const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
 const navLinks = nav ? Array.from(nav.querySelectorAll('a[href^="#"]')) : [];
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const supportsIndividualTransforms =
+  window.CSS &&
+  typeof window.CSS.supports === "function" &&
+  window.CSS.supports("translate", "0 0") &&
+  window.CSS.supports("scale", "1");
+const supportsWebp =
+  document.createElement("canvas").toDataURL("image/webp").indexOf("data:image/webp") === 0;
+
+document.documentElement.classList.toggle("no-individual-transform", !supportsIndividualTransforms);
+document.documentElement.classList.toggle("no-webp", !supportsWebp);
 
 function setHeaderState() {
   header?.classList.toggle("is-scrolled", window.scrollY > 8);
@@ -134,7 +144,7 @@ const scrollMotionSections = document.querySelectorAll(
 );
 const motionSections = [...earlyMotionSections, ...scrollMotionSections];
 
-if (!prefersReducedMotion && "IntersectionObserver" in window) {
+if (!prefersReducedMotion && supportsIndividualTransforms && "IntersectionObserver" in window) {
   const observeSections = (sections, options) => {
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -152,12 +162,20 @@ if (!prefersReducedMotion && "IntersectionObserver" in window) {
 
   observeSections(earlyMotionSections, { rootMargin: "0px 0px 12% 0px", threshold: 0.08 });
   observeSections(scrollMotionSections, { rootMargin: "0px 0px -14% 0px", threshold: 0.18 });
+  window.setTimeout(() => {
+    motionSections.forEach((section) => section.classList.add("is-in-view"));
+  }, 1200);
 } else {
   motionSections.forEach((section) => section.classList.add("is-in-view"));
 }
 
 document.querySelectorAll(".asset-frame img").forEach((image) => {
   const frame = image.closest(".asset-frame");
+  const enhancedSrc = image.dataset.enhancedSrc;
+  if (enhancedSrc && supportsWebp) {
+    image.src = enhancedSrc;
+  }
+
   const markLoaded = () => {
     frame?.classList.add("has-image");
     frame?.classList.remove("is-missing");
@@ -193,15 +211,27 @@ document.querySelectorAll(".asset-frame img").forEach((image) => {
 document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
   if (!(video instanceof HTMLVideoElement)) return;
 
+  const media = video.closest(".hero-media");
+  const markVideoReady = () => {
+    media?.classList.add("is-video-ready");
+    media?.classList.remove("is-video-unavailable");
+  };
+  const markVideoUnavailable = () => {
+    media?.classList.remove("is-video-ready");
+    media?.classList.add("is-video-unavailable");
+  };
   const syncFallbackClass = () => {
     video.classList.toggle("is-fallback-video", /\.mp4(?:$|\?)/.test(video.currentSrc));
   };
   const playMutedVideo = () => {
     if (document.visibilityState !== "visible") return;
-    video.play().catch(() => {});
+    video.play().then(markVideoReady).catch(() => {});
   };
 
   video.addEventListener("loadedmetadata", syncFallbackClass);
+  video.addEventListener("loadeddata", markVideoReady);
+  video.addEventListener("canplay", markVideoReady);
+  video.addEventListener("error", markVideoUnavailable);
   video.addEventListener("loadeddata", playMutedVideo, { once: true });
   document.addEventListener("visibilitychange", playMutedVideo);
   syncFallbackClass();

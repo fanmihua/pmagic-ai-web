@@ -65,6 +65,7 @@ body::before {
       transparent 92px
     ),
     linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0));
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 88%);
   mask-image: linear-gradient(180deg, #000 0%, transparent 88%);
   z-index: -1;
 }
@@ -123,6 +124,7 @@ img {
   border-radius: 999px;
   background: var(--surface-strong);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
@@ -253,6 +255,7 @@ main {
   background: var(--surface);
   border-color: var(--glass-line);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -329,6 +332,7 @@ main {
   background: var(--surface-medium);
   border: 1px solid var(--glass-line);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 
@@ -508,22 +512,39 @@ main {
     contrast(0.98)
     drop-shadow(0 18px 32px rgba(96, 123, 255, 0.1))
     drop-shadow(0 0 18px rgba(255, 255, 255, 0.72));
+  transition: opacity 220ms ease;
 }
 
 .hero-video {
-  opacity: 1;
+  opacity: 0;
 }
 
 .hero-video.is-fallback-video {
-  opacity: 0.94;
   border-radius: 36%;
   mix-blend-mode: multiply;
   filter: saturate(1.08) contrast(1.03);
+  -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 0 68%, rgba(0, 0, 0, 0.76) 78%, transparent 95%);
   mask-image: radial-gradient(circle at 50% 48%, #000 0 68%, rgba(0, 0, 0, 0.76) 78%, transparent 95%);
 }
 
 .hero-video-poster {
+  opacity: 0.94;
+}
+
+.hero-media.is-video-ready .hero-video {
+  opacity: 1;
+}
+
+.hero-media.is-video-ready .hero-video-poster {
   opacity: 0;
+}
+
+.hero-media.is-video-unavailable .hero-video {
+  display: none;
+}
+
+.hero-media.is-video-unavailable .hero-video-poster {
+  opacity: 0.94;
 }
 
 .orbit {
@@ -571,6 +592,7 @@ main {
   background: var(--surface-medium);
   border: 1px solid var(--glass-line);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   white-space: nowrap;
 }
@@ -683,6 +705,7 @@ main {
   background: var(--surface);
   border: 1px solid var(--glass-line);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
 }
 
@@ -800,7 +823,10 @@ main {
 }
 
 .metric-card > div:first-child {
-  display: contents;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-content: start;
 }
 
 .metric-card h3,
@@ -814,11 +840,10 @@ main {
 }
 
 .metric-card h3 {
-  grid-area: title;
+  min-width: 0;
 }
 
 .metric-card strong {
-  grid-area: value;
   display: block;
   margin: 14px 0 0;
   color: var(--primary);
@@ -840,7 +865,6 @@ main {
 }
 
 .metric-card p {
-  grid-area: copy;
   max-width: 100%;
 }
 
@@ -1310,6 +1334,7 @@ main {
   border-radius: 16px;
   background: var(--surface-medium);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -1456,6 +1481,14 @@ main {
     radial-gradient(circle at 43% 58%, rgba(96, 165, 255, 0.1), transparent 38%),
     linear-gradient(112deg, transparent 14%, rgba(129, 111, 255, 0.065) 46%, transparent 80%);
   background-size: 46px 46px, 46px 46px, 100% 100%, 100% 100%;
+  -webkit-mask-image: radial-gradient(
+    ellipse at 45% 57%,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.82) 34%,
+    rgba(0, 0, 0, 0.38) 56%,
+    rgba(0, 0, 0, 0.08) 72%,
+    transparent 86%
+  );
   mask-image: radial-gradient(
     ellipse at 45% 57%,
     rgba(0, 0, 0, 0.96) 0%,
@@ -1514,6 +1547,7 @@ main {
   border-radius: 22px;
   background: var(--surface-medium);
   box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   display: flex;
   flex-direction: column;
@@ -2022,7 +2056,11 @@ main {
   }
 
   .site-header {
+    position: sticky;
     padding: 8px 0 8px;
+    background: rgba(246, 248, 255, 0.84);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
   }
 
   .site-header.is-scrolled {
@@ -2044,7 +2082,7 @@ main {
   }
 
   main {
-    padding-top: 76px;
+    padding-top: 0;
   }
 
   .menu-toggle {
@@ -2110,7 +2148,7 @@ main {
   }
 
   .hero {
-    padding-top: 22px;
+    padding-top: 18px;
   }
 
   .hero h1 {
@@ -2215,6 +2253,7 @@ main {
     border-radius: 14px;
     background: var(--surface-medium);
     box-shadow: var(--soft-shadow);
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
   }
 
@@ -2579,6 +2618,54 @@ main {
 @media (hover: none) {
   .interactive-card:hover {
     translate: 0 0;
+  }
+}
+
+.no-individual-transform .hero-copy > *,
+.no-individual-transform .hero .actions .btn,
+.no-individual-transform .hero-frame .hero-media,
+.no-individual-transform .hero-frame .agent-tag,
+.no-individual-transform .metrics-section.motion-ready .metric-card,
+.no-individual-transform .metrics-section.motion-ready .section-title,
+.no-individual-transform .metrics-section.motion-ready .pain-card,
+.no-individual-transform .architecture-section.motion-ready .section-title,
+.no-individual-transform .architecture-section.motion-ready .architecture-core-logo,
+.no-individual-transform .architecture-section.motion-ready .architecture-visual .agent-tag,
+.no-individual-transform .architecture-section.motion-ready .layer-list,
+.no-individual-transform .modules-section.motion-ready .section-title,
+.no-individual-transform .modules-section.motion-ready .module-grid,
+.no-individual-transform .case-section.motion-ready .section-title,
+.no-individual-transform .case-section.motion-ready .case-card,
+.no-individual-transform .whitepaper-section.motion-ready .whitepaper-head,
+.no-individual-transform .whitepaper-section.motion-ready .whitepaper-grid,
+.no-individual-transform .final-section.motion-ready .final-cta {
+  opacity: 1 !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+@supports not (translate: 0 0) {
+  .hero-copy > *,
+  .hero .actions .btn,
+  .hero-frame .hero-media,
+  .hero-frame .agent-tag,
+  .metrics-section.motion-ready .metric-card,
+  .metrics-section.motion-ready .section-title,
+  .metrics-section.motion-ready .pain-card,
+  .architecture-section.motion-ready .section-title,
+  .architecture-section.motion-ready .architecture-core-logo,
+  .architecture-section.motion-ready .architecture-visual .agent-tag,
+  .architecture-section.motion-ready .layer-list,
+  .modules-section.motion-ready .section-title,
+  .modules-section.motion-ready .module-grid,
+  .case-section.motion-ready .section-title,
+  .case-section.motion-ready .case-card,
+  .whitepaper-section.motion-ready .whitepaper-head,
+  .whitepaper-section.motion-ready .whitepaper-grid,
+  .final-section.motion-ready .final-cta {
+    opacity: 1 !important;
+    filter: none !important;
+    animation: none !important;
   }
 }
 
