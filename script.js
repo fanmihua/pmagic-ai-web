@@ -167,15 +167,25 @@ document.querySelectorAll(".asset-frame img").forEach((image) => {
     frame?.classList.remove("has-image");
     frame?.classList.add("is-missing");
   };
+  const tryFallback = () => {
+    const fallback = image.dataset.fallback;
+    if (!fallback || image.dataset.fallbackUsed === "true") return false;
+    image.dataset.fallbackUsed = "true";
+    image.src = fallback;
+    return true;
+  };
 
   image.addEventListener("load", markLoaded);
-  image.addEventListener("error", markMissing);
+  image.addEventListener("error", () => {
+    if (tryFallback()) return;
+    markMissing();
+  });
 
   if (image.complete) {
     if (image.naturalWidth > 0) {
       markLoaded();
     } else {
-      markMissing();
+      if (!tryFallback()) markMissing();
     }
   }
 });

@@ -451,7 +451,7 @@ main {
 }
 
 .visual-placeholder span {
-  max-width: 80%;
+  display: none;
 }
 
 .hero-frame {
@@ -1426,49 +1426,71 @@ main {
 
 .whitepaper-grid {
   display: grid;
-  grid-template-columns: 0.72fr 1.76fr;
+  grid-template-columns: 0.82fr 1.76fr;
   align-items: stretch;
-  gap: 30px;
+  gap: 22px;
 }
 
 .books-asset {
-  width: min(100%, 380px);
+  width: 100%;
   height: 430px;
   min-height: 0;
   align-self: center;
   justify-self: center;
-  border: 1px solid rgba(218, 224, 255, 0.78);
-  border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(246, 249, 255, 0.96), rgba(236, 244, 255, 0.78) 54%, rgba(255, 248, 255, 0.82)),
-    linear-gradient(90deg, rgba(129, 111, 255, 0.08), rgba(96, 165, 255, 0.08));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 16px 34px rgba(96, 123, 255, 0.06);
-  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  isolation: isolate;
 }
 
 .books-asset::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -18px -4px -22px -24px;
   z-index: 0;
   background-image:
-    linear-gradient(rgba(129, 111, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(96, 165, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(135deg, rgba(255, 255, 255, 0) 18%, rgba(129, 111, 255, 0.08) 48%, rgba(255, 255, 255, 0) 76%);
-  background-size: 38px 38px, 38px 38px, 100% 100%;
-  mask-image: linear-gradient(135deg, transparent 0%, #000 20%, #000 78%, transparent 100%);
+    linear-gradient(rgba(129, 111, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 255, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 42% 58%, rgba(96, 165, 255, 0.12), transparent 36%),
+    linear-gradient(112deg, transparent 8%, rgba(129, 111, 255, 0.08) 43%, transparent 76%);
+  background-size: 42px 42px, 42px 42px, 100% 100%, 100% 100%;
+  mask-image:
+    radial-gradient(ellipse at 46% 58%, #000 0%, #000 42%, transparent 78%),
+    linear-gradient(90deg, #000 0%, #000 70%, transparent 100%);
   opacity: 0.72;
+}
+
+.books-asset::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 8%;
+  bottom: 20px;
+  z-index: 1;
+  height: 86px;
+  background:
+    radial-gradient(ellipse at 32% 54%, rgba(96, 165, 255, 0.2), transparent 56%),
+    radial-gradient(ellipse at 64% 44%, rgba(242, 90, 168, 0.14), transparent 58%);
+  filter: blur(18px);
+  opacity: 0.72;
+  transform: skewX(-10deg);
 }
 
 .books-asset img {
   position: absolute;
-  inset: 0;
+  left: -16px;
+  right: auto;
+  bottom: -12px;
   display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
+  width: 112%;
+  height: 106%;
+  max-width: none;
+  max-height: none;
   object-fit: contain;
+  object-position: left bottom;
+  filter: drop-shadow(0 22px 26px rgba(96, 123, 255, 0.1));
   z-index: 2;
 }
 
@@ -2035,13 +2057,15 @@ main {
     display: none;
     justify-items: start;
     gap: 0;
+    border-top: 1px solid rgba(96, 125, 182, 0.12);
   }
 
   .nav-links a {
     width: 100%;
     padding: 12px 6px;
-    border-radius: 14px;
-    border-top: 1px solid rgba(96, 125, 182, 0.12);
+    border-radius: 0;
+    border-top: 0;
+    border-bottom: 1px solid rgba(96, 125, 182, 0.12);
   }
 
   .nav-links a:not(.is-active):hover,
