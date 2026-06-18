@@ -2,6 +2,8 @@
 
 PMagic AI 官网静态页，使用原生 HTML、CSS 和 JavaScript 构建，可直接通过静态服务器预览或部署。
 
+线上地址：<https://fanmihua.github.io/pmagic-ai-web/>
+
 ## 本地预览
 
 ```bash
@@ -22,4 +24,3 @@ python3 -m http.server 5173
 ## 资产维护
 
 仓库只保留页面运行时需要的素材。调试截图、参考源图、临时导出、Playwright 记录等文件放在本地即可，不提交到仓库。
-
