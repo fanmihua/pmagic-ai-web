@@ -517,6 +517,7 @@ main {
 
 .hero-video {
   opacity: 0;
+  pointer-events: none;
 }
 
 .hero-video.is-fallback-video {

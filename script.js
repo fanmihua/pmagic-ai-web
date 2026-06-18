@@ -212,11 +212,13 @@ document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
   if (!(video instanceof HTMLVideoElement)) return;
 
   const media = video.closest(".hero-media");
+  const prefersStaticHeroMedia = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 768px)").matches;
   const markVideoReady = () => {
     media?.classList.add("is-video-ready");
     media?.classList.remove("is-video-unavailable");
   };
   const markVideoUnavailable = () => {
+    video.pause();
     media?.classList.remove("is-video-ready");
     media?.classList.add("is-video-unavailable");
   };
@@ -224,13 +226,19 @@ document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
     video.classList.toggle("is-fallback-video", /\.mp4(?:$|\?)/.test(video.currentSrc));
   };
   const playMutedVideo = () => {
+    if (prefersStaticHeroMedia) {
+      markVideoUnavailable();
+      return;
+    }
     if (document.visibilityState !== "visible") return;
-    video.play().then(markVideoReady).catch(() => {});
+    video.play().then(markVideoReady).catch(markVideoUnavailable);
   };
 
   video.addEventListener("loadedmetadata", syncFallbackClass);
-  video.addEventListener("loadeddata", markVideoReady);
-  video.addEventListener("canplay", markVideoReady);
+  video.addEventListener("playing", markVideoReady);
+  video.addEventListener("pause", () => {
+    if (!video.ended) markVideoUnavailable();
+  });
   video.addEventListener("error", markVideoUnavailable);
   video.addEventListener("loadeddata", playMutedVideo, { once: true });
   document.addEventListener("visibilitychange", playMutedVideo);
