@@ -128,26 +128,30 @@ if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
   });
 }
 
-const motionSections = document.querySelectorAll(
-  ".metrics-section, .architecture-section, .modules-section, .case-section, .whitepaper-section, .final-section"
+const earlyMotionSections = document.querySelectorAll(".metrics-section, .architecture-section");
+const scrollMotionSections = document.querySelectorAll(
+  ".modules-section, .case-section, .whitepaper-section, .final-section"
 );
+const motionSections = [...earlyMotionSections, ...scrollMotionSections];
 
 if (!prefersReducedMotion && "IntersectionObserver" in window) {
-  const sectionObserver = new IntersectionObserver(
-    (entries) => {
+  const observeSections = (sections, options) => {
+    const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add("is-in-view");
         sectionObserver.unobserve(entry.target);
       });
-    },
-    { rootMargin: "0px 0px 18% 0px", threshold: 0.08 }
-  );
+    }, options);
 
-  motionSections.forEach((section) => {
-    section.classList.add("motion-ready");
-    sectionObserver.observe(section);
-  });
+    sections.forEach((section) => {
+      section.classList.add("motion-ready");
+      sectionObserver.observe(section);
+    });
+  };
+
+  observeSections(earlyMotionSections, { rootMargin: "0px 0px 12% 0px", threshold: 0.08 });
+  observeSections(scrollMotionSections, { rootMargin: "0px 0px -14% 0px", threshold: 0.18 });
 } else {
   motionSections.forEach((section) => section.classList.add("is-in-view"));
 }

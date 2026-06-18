@@ -157,13 +157,16 @@ img {
   transition: color 160ms ease, background 160ms ease;
 }
 
-.nav-links a:hover,
-.nav-links a:focus-visible {
+.nav-links a:not(.is-active):hover,
+.nav-links a:not(.is-active):focus-visible {
   color: var(--primary);
   background: rgba(96, 123, 255, 0.07);
 }
 
-.nav-links a.is-active {
+.nav-links a.is-active,
+.nav-links a.is-active:hover,
+.nav-links a.is-active:focus,
+.nav-links a.is-active:focus-visible {
   color: transparent;
   background: linear-gradient(90deg, var(--primary-deep), var(--primary-bright));
   background-clip: text;
@@ -1115,14 +1118,14 @@ main {
 .modules-section.motion-ready .section-title,
 .modules-section.motion-ready .module-grid {
   opacity: 0;
-  translate: 0 18px;
+  translate: 0 24px;
   scale: 0.985;
   filter: blur(8px);
 }
 
 .modules-section.is-in-view .section-title,
 .modules-section.is-in-view .module-grid {
-  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: sectionItemEnter 640ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .modules-section.is-in-view .section-title { animation-delay: 20ms; }
@@ -1199,7 +1202,7 @@ main {
 .case-section.motion-ready .section-title,
 .case-section.motion-ready .case-card {
   opacity: 0;
-  translate: 0 18px;
+  translate: 0 24px;
   filter: blur(8px);
 }
 
@@ -1210,7 +1213,7 @@ main {
 
 .case-section.is-in-view .section-title,
 .case-section.is-in-view .case-card {
-  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: sectionItemEnter 640ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .case-section.is-in-view .section-title { animation-delay: 20ms; }
@@ -1392,14 +1395,14 @@ main {
 .whitepaper-section.motion-ready .whitepaper-head,
 .whitepaper-section.motion-ready .whitepaper-grid {
   opacity: 0;
-  translate: 0 18px;
+  translate: 0 24px;
   scale: 0.985;
   filter: blur(8px);
 }
 
 .whitepaper-section.is-in-view .whitepaper-head,
 .whitepaper-section.is-in-view .whitepaper-grid {
-  animation: sectionItemEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: sectionItemEnter 640ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .whitepaper-section.is-in-view .whitepaper-head { animation-delay: 20ms; }
@@ -1559,13 +1562,13 @@ main {
 
 .final-section.motion-ready .final-cta {
   opacity: 0;
-  translate: 0 18px;
+  translate: 0 24px;
   scale: 0.985;
   filter: blur(8px);
 }
 
 .final-section.is-in-view .final-cta {
-  animation: finalPanelEnter 560ms cubic-bezier(0.16, 1, 0.3, 1) 20ms forwards;
+  animation: finalPanelEnter 640ms cubic-bezier(0.16, 1, 0.3, 1) 20ms forwards;
 }
 
 .final-cta {
@@ -2041,14 +2044,17 @@ main {
     border-top: 1px solid rgba(96, 125, 182, 0.12);
   }
 
-  .nav-links a:hover,
-  .nav-links a:focus-visible {
+  .nav-links a:not(.is-active):hover,
+  .nav-links a:not(.is-active):focus-visible {
     color: var(--primary);
     background: rgba(96, 123, 255, 0.07);
     -webkit-text-fill-color: currentColor;
   }
 
-  .nav-links a.is-active {
+  .nav-links a.is-active,
+  .nav-links a.is-active:hover,
+  .nav-links a.is-active:focus,
+  .nav-links a.is-active:focus-visible {
     color: var(--primary-deep);
     background: transparent;
     background-clip: initial;
