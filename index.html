@@ -9,7 +9,7 @@
     />
     <title>Pmagic AI 建工管理矩阵 OS</title>
     <link rel="icon" href="assets/images/pmagic-logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260618-mobile-static-loop" />
+    <link rel="stylesheet" href="styles.css?v=20260618-responsive-3d" />
   </head>
   <body>
     <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -67,7 +67,23 @@
 
           <div class="hero-visual asset-frame hero-frame" data-asset-label="Hero 3D 工程大脑">
             <div class="hero-media" aria-label="Pmagic AI 工程大脑 3D 动态标志">
-              <img class="hero-video-poster" src="assets/images/hero-brain-poster.png" data-enhanced-src="assets/images/hero-brain-poster.webp" alt="" aria-hidden="true" />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="assets/images/hero-brain-poster-360.webp 360w, assets/images/hero-brain-poster-540.webp 540w, assets/images/hero-brain-poster.webp 720w"
+                  sizes="(max-width: 620px) 72vw, (max-width: 860px) 82vw, 540px"
+                />
+                <img
+                  class="hero-video-poster"
+                  src="assets/images/hero-brain-poster-540.png"
+                  srcset="assets/images/hero-brain-poster-360.png 360w, assets/images/hero-brain-poster-540.png 540w, assets/images/hero-brain-poster.png 720w"
+                  sizes="(max-width: 620px) 72vw, (max-width: 860px) 82vw, 540px"
+                  alt=""
+                  aria-hidden="true"
+                  decoding="async"
+                  fetchpriority="high"
+                />
+              </picture>
               <video class="hero-video" muted loop playsinline preload="none" poster="assets/images/hero-brain-poster.png" data-autoplay-video aria-hidden="true" tabindex="-1">
                 <source src="assets/videos/hero-brain-core.mp4" type="video/mp4" />
                 <source src="assets/videos/hero-brain-core-alpha.webm" type="video/webm" />
@@ -175,7 +191,23 @@
           <h2 class="section-title" id="architecture-title">一个工程大脑中枢，编排多个业务 Agent</h2>
           <div class="architecture-grid">
             <div class="asset-frame architecture-visual" data-asset-label="架构区工程大脑">
-              <img class="architecture-core-logo" src="assets/images/logo-3d.webp" data-fallback="assets/images/logo-3d.png" alt="多业务 Agent 编排架构" decoding="async" />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcset="assets/images/logo-3d-360.webp 360w, assets/images/logo-3d-480.webp 480w, assets/images/logo-3d.webp 640w"
+                  sizes="(max-width: 620px) 58vw, 350px"
+                />
+                <img
+                  class="architecture-core-logo"
+                  src="assets/images/logo-3d-480.png"
+                  srcset="assets/images/logo-3d-360.png 360w, assets/images/logo-3d-480.png 480w, assets/images/logo-3d.png 640w"
+                  sizes="(max-width: 620px) 58vw, 350px"
+                  alt="多业务 Agent 编排架构"
+                  decoding="async"
+                  loading="lazy"
+                  fetchpriority="low"
+                />
+              </picture>
               <div class="visual-placeholder"><span>logo-3d.png</span></div>
               <div class="orbit orbit-one"></div>
               <div class="orbit orbit-two"></div>
@@ -479,6 +511,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20260618-mobile-static-loop"></script>
+    <script src="script.js?v=20260618-responsive-3d"></script>
   </body>
 </html>
