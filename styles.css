@@ -2371,7 +2371,10 @@ main {
   }
 
   .site-header {
-    position: sticky;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 8px 0 8px;
     background: rgba(246, 248, 255, 0.84);
     -webkit-backdrop-filter: blur(14px);
@@ -2397,7 +2400,7 @@ main {
   }
 
   main {
-    padding-top: 0;
+    padding-top: 82px;
   }
 
   .menu-toggle {
