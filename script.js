@@ -3,7 +3,9 @@ const navShell = document.querySelector(".nav-shell");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const nav = document.querySelector("[data-nav]");
 const navLinks = nav ? Array.from(nav.querySelectorAll('a[href^="#"]')) : [];
+const footerSections = Array.from(document.querySelectorAll("[data-footer-section]"));
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const footerCompactQuery = window.matchMedia("(max-width: 860px)");
 const supportsIndividualTransforms =
   window.CSS &&
   typeof window.CSS.supports === "function" &&
@@ -21,6 +23,19 @@ function setHeaderState() {
 
 window.addEventListener("scroll", setHeaderState, { passive: true });
 setHeaderState();
+
+function syncFooterSections(event = footerCompactQuery) {
+  footerSections.forEach((section) => {
+    section.open = !event.matches;
+  });
+}
+
+syncFooterSections();
+if (typeof footerCompactQuery.addEventListener === "function") {
+  footerCompactQuery.addEventListener("change", syncFooterSections);
+} else if (typeof footerCompactQuery.addListener === "function") {
+  footerCompactQuery.addListener(syncFooterSections);
+}
 
 const navTargets = navLinks
   .map((link) => {
@@ -169,50 +184,182 @@ if (!prefersReducedMotion && supportsIndividualTransforms && "IntersectionObserv
   motionSections.forEach((section) => section.classList.add("is-in-view"));
 }
 
-document.querySelectorAll(".asset-frame img").forEach((image) => {
-  const frame = image.closest(".asset-frame");
-  const enhancedSrc = image.dataset.enhancedSrc;
-  if (enhancedSrc && supportsWebp) {
-    image.src = enhancedSrc;
-  }
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-  const markLoaded = () => {
-    frame?.classList.add("has-image");
-    frame?.classList.remove("is-missing");
-  };
-  const markMissing = () => {
-    image.style.display = "none";
-    frame?.classList.remove("has-image");
-    frame?.classList.add("is-missing");
-  };
-  const tryFallback = () => {
-    const fallback = image.dataset.fallback;
-    if (!fallback || image.dataset.fallbackUsed === "true") return false;
-    image.dataset.fallbackUsed = "true";
-    image.src = fallback;
-    return true;
-  };
+function setupAssetFrames(root = document) {
+  root.querySelectorAll(".asset-frame img").forEach((image) => {
+    if (image.dataset.assetReady === "true") return;
+    image.dataset.assetReady = "true";
 
-  image.addEventListener("load", markLoaded);
-  image.addEventListener("error", () => {
-    if (tryFallback()) return;
-    markMissing();
-  });
-
-  if (image.complete) {
-    if (image.naturalWidth > 0) {
-      markLoaded();
-    } else {
-      if (!tryFallback()) markMissing();
+    const frame = image.closest(".asset-frame");
+    frame?.classList.add("is-loading");
+    const enhancedSrc = image.dataset.enhancedSrc;
+    if (enhancedSrc && supportsWebp) {
+      image.src = enhancedSrc;
     }
+
+    const markLoaded = () => {
+      frame?.classList.add("has-image");
+      frame?.classList.remove("is-loading");
+      frame?.classList.remove("is-missing");
+    };
+    const markMissing = () => {
+      image.style.display = "none";
+      frame?.classList.remove("is-loading");
+      frame?.classList.remove("has-image");
+      frame?.classList.add("is-missing");
+    };
+    const tryFallback = () => {
+      const fallback = image.dataset.fallback;
+      if (!fallback || image.dataset.fallbackUsed === "true") return false;
+      image.dataset.fallbackUsed = "true";
+      image.src = fallback;
+      return true;
+    };
+
+    image.addEventListener("load", markLoaded);
+    image.addEventListener("error", () => {
+      if (tryFallback()) return;
+      markMissing();
+    });
+
+    if (image.complete) {
+      if (image.naturalWidth > 0) {
+        markLoaded();
+      } else if (!tryFallback()) {
+        markMissing();
+      }
+    }
+  });
+}
+
+function mediaUrl(asset, fallback = "") {
+  return asset?.url || fallback;
+}
+
+function renderCaseSection(caseSection) {
+  const section = document.querySelector("#case");
+  const title = document.querySelector("#case-title");
+  const container = section?.querySelector(".container");
+  const item = caseSection?.cases?.[0];
+  if (!section || !title || !container || !item) return;
+
+  title.textContent = caseSection.title || title.textContent;
+  const imageUrl = mediaUrl(item.image, "assets/images/case-city.webp");
+  const imageAlt = item.image?.alt || item.title;
+  const paragraphs = (item.summaryParagraphs || []).map((text) => `<p>${escapeHtml(text)}</p>`).join("");
+  const metrics = (item.metrics || [])
+    .map(
+      (metric) =>
+        `<div><span>${escapeHtml(metric.label)}</span><strong>${escapeHtml(metric.value)}</strong><small>${escapeHtml(metric.description)}</small></div>`
+    )
+    .join("");
+  const timeline = (item.timelineSteps || [])
+    .map((step) => `<li><span></span><b>${escapeHtml(step.title)}</b><small>${escapeHtml(step.timeLabel)}</small></li>`)
+    .join("");
+
+  container.querySelector(".case-card")?.remove();
+  container.insertAdjacentHTML(
+    "beforeend",
+    `
+      <div class="case-card">
+        <div class="asset-frame case-image" data-asset-label="案例图片">
+          <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(imageAlt)}" decoding="async" />
+          <div class="visual-placeholder"><span>${escapeHtml(imageAlt)}</span></div>
+        </div>
+        <div class="case-content">
+          <div class="case-heading">
+            <h3>${escapeHtml(item.title)}</h3>
+            <span>${escapeHtml(item.badge)}</span>
+          </div>
+          ${paragraphs}
+          <div class="case-stats">${metrics}</div>
+          <ol class="timeline">${timeline}</ol>
+        </div>
+      </div>
+    `
+  );
+
+  setupAssetFrames(section);
+}
+
+function renderWhitepaperSection(whitepaperSection) {
+  const section = document.querySelector("#whitepaper");
+  const title = document.querySelector("#whitepaper-title");
+  const description = section?.querySelector(".whitepaper-head p");
+  const grid = section?.querySelector(".whitepaper-grid");
+  if (!section || !title || !description || !grid || !whitepaperSection) return;
+
+  title.textContent = whitepaperSection.title || title.textContent;
+  description.textContent = whitepaperSection.description || description.textContent;
+
+  const coverUrl = mediaUrl(whitepaperSection.cover, "assets/images/whitepaper-books-cover.png").replace(
+    "whitepaper-books-cover.webp",
+    "whitepaper-books-cover.png"
+  );
+  const cards = (whitepaperSection.whitepapers || [])
+    .map((paper) => {
+      const previewUrl = mediaUrl(paper.preview, "assets/images/whitepaper-agent-orchestrator.webp");
+      const onlineUrl = paper.onlineUrl || "#whitepaper-title";
+      const downloadUrl = paper.downloadUrl || `/api/public/whitepapers/${paper.slug}/download`;
+      return `
+        <article class="paper-card">
+          <span class="bookmark" aria-hidden="true"></span>
+          <h3>${escapeHtml(paper.title)}</h3>
+          <p>${escapeHtml(paper.summary)}</p>
+          <div class="asset-frame paper-preview" data-asset-label="${escapeHtml(paper.title)}">
+            <img src="${escapeHtml(previewUrl)}" alt="${escapeHtml(paper.title)}预览" decoding="async" />
+            <div class="visual-placeholder"><span>${escapeHtml(paper.title)}</span></div>
+          </div>
+          <div class="paper-actions">
+            <a class="btn btn-small btn-secondary" href="${escapeHtml(onlineUrl)}">在线浏览</a>
+            <a class="btn btn-small btn-primary" href="${escapeHtml(downloadUrl)}">下载白皮书</a>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+
+  grid.innerHTML = `
+    <div class="asset-frame books-asset" data-asset-label="白皮书书本">
+      <img src="${escapeHtml(coverUrl)}" alt="${escapeHtml(whitepaperSection.title)}" decoding="async" />
+      <div class="visual-placeholder"><span>${escapeHtml(whitepaperSection.title)}</span></div>
+    </div>
+    <div class="paper-cards">
+      ${cards}
+    </div>
+  `;
+
+  setupAssetFrames(section);
+}
+
+async function loadHomepageContent() {
+  try {
+    const response = await fetch("/api/public/homepage-content", { credentials: "same-origin" });
+    if (!response.ok) return;
+    const content = await response.json();
+    renderCaseSection(content.caseSection);
+    renderWhitepaperSection(content.whitepaperSection);
+  } catch {
+    // Keep the static HTML content as the public fallback.
   }
-});
+}
+
+setupAssetFrames();
+loadHomepageContent();
 
 document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
   if (!(video instanceof HTMLVideoElement)) return;
 
   const media = video.closest(".hero-media");
-  const prefersStaticHeroMedia = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 768px)").matches;
+  const prefersStaticHeroMedia = prefersReducedMotion || window.matchMedia("(max-width: 768px)").matches;
   const markVideoReady = () => {
     media?.classList.add("is-video-ready");
     media?.classList.remove("is-video-unavailable");
