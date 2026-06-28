@@ -2,8 +2,11 @@
 .playwright-cli/
 output/
 reference/
+test-results/
 node_modules/
+server/uploads/
 dist/
 build/
 .next/
-
+.vercel
+*.tsbuildinfo

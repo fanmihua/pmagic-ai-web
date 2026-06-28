@@ -1,0 +1,14 @@
+.DS_Store
+.env
+.env.*
+
+.playwright-cli/
+output/
+reference/
+test-results/
+
+admin/
+server/
+docs/
+docker-compose.yml
+.dockerignore

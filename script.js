@@ -248,42 +248,51 @@ function renderCaseSection(caseSection) {
   const section = document.querySelector("#case");
   const title = document.querySelector("#case-title");
   const container = section?.querySelector(".container");
-  const item = caseSection?.cases?.[0];
-  if (!section || !title || !container || !item) return;
+  const cases = Array.isArray(caseSection?.cases) ? caseSection.cases : [];
+  if (!section || !title || !container || !cases.length) return;
 
   title.textContent = caseSection.title || title.textContent;
-  const imageUrl = mediaUrl(item.image, "assets/images/case-city.webp");
-  const imageAlt = item.image?.alt || item.title;
-  const paragraphs = (item.summaryParagraphs || []).map((text) => `<p>${escapeHtml(text)}</p>`).join("");
-  const metrics = (item.metrics || [])
-    .map(
-      (metric) =>
-        `<div><span>${escapeHtml(metric.label)}</span><strong>${escapeHtml(metric.value)}</strong><small>${escapeHtml(metric.description)}</small></div>`
-    )
-    .join("");
-  const timeline = (item.timelineSteps || [])
-    .map((step) => `<li><span></span><b>${escapeHtml(step.title)}</b><small>${escapeHtml(step.timeLabel)}</small></li>`)
+  const cards = cases
+    .map((item) => {
+      const imageUrl = mediaUrl(item.image, "assets/images/case-city.webp");
+      const imageAlt = item.image?.alt || item.title;
+      const paragraphs = (item.summaryParagraphs || []).map((text) => `<p>${escapeHtml(text)}</p>`).join("");
+      const metrics = (item.metrics || [])
+        .map(
+          (metric) =>
+            `<div><span>${escapeHtml(metric.label)}</span><strong>${escapeHtml(metric.value)}</strong><small>${escapeHtml(metric.description)}</small></div>`
+        )
+        .join("");
+      const timeline = (item.timelineSteps || [])
+        .map((step) => `<li><span></span><b>${escapeHtml(step.title)}</b><small>${escapeHtml(step.timeLabel)}</small></li>`)
+        .join("");
+
+      return `
+        <div class="case-card">
+          <div class="asset-frame case-image" data-asset-label="案例图片">
+            <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(imageAlt)}" decoding="async" />
+            <div class="visual-placeholder"><span>${escapeHtml(imageAlt)}</span></div>
+          </div>
+          <div class="case-content">
+            <div class="case-heading">
+              <h3>${escapeHtml(item.title)}</h3>
+              <span>${escapeHtml(item.badge)}</span>
+            </div>
+            ${paragraphs}
+            <div class="case-stats">${metrics}</div>
+            <ol class="timeline">${timeline}</ol>
+          </div>
+        </div>
+      `;
+    })
     .join("");
 
+  container.querySelector(".case-list")?.remove();
   container.querySelector(".case-card")?.remove();
   container.insertAdjacentHTML(
     "beforeend",
     `
-      <div class="case-card">
-        <div class="asset-frame case-image" data-asset-label="案例图片">
-          <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(imageAlt)}" decoding="async" />
-          <div class="visual-placeholder"><span>${escapeHtml(imageAlt)}</span></div>
-        </div>
-        <div class="case-content">
-          <div class="case-heading">
-            <h3>${escapeHtml(item.title)}</h3>
-            <span>${escapeHtml(item.badge)}</span>
-          </div>
-          ${paragraphs}
-          <div class="case-stats">${metrics}</div>
-          <ol class="timeline">${timeline}</ol>
-        </div>
-      </div>
+      <div class="case-list">${cards}</div>
     `
   );
 
@@ -354,6 +363,72 @@ async function loadHomepageContent() {
 
 setupAssetFrames();
 loadHomepageContent();
+
+const demoModal = document.querySelector("[data-demo-modal]");
+const demoDialog = demoModal?.querySelector(".demo-modal__dialog");
+const demoForm = document.querySelector("[data-demo-form]");
+const demoStatus = document.querySelector("[data-demo-status]");
+let lastFocusedElement = null;
+
+function openDemoModal(event) {
+  event?.preventDefault();
+  if (!demoModal) return;
+  lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  demoModal.hidden = false;
+  document.body.classList.add("is-demo-modal-open");
+  window.setTimeout(() => {
+    demoModal.classList.add("is-open");
+    const firstInput = demoModal.querySelector("input");
+    if (firstInput instanceof HTMLElement) firstInput.focus();
+  }, 0);
+}
+
+function closeDemoModal() {
+  if (!demoModal) return;
+  demoModal.classList.remove("is-open");
+  document.body.classList.remove("is-demo-modal-open");
+  window.setTimeout(() => {
+    demoModal.hidden = true;
+    if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
+  }, 180);
+}
+
+document.querySelectorAll("[data-demo-open]").forEach((control) => {
+  control.addEventListener("click", openDemoModal);
+});
+
+document.querySelectorAll("[data-demo-close]").forEach((control) => {
+  control.addEventListener("click", closeDemoModal);
+});
+
+demoDialog?.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && demoModal?.classList.contains("is-open")) {
+    closeDemoModal();
+  }
+});
+
+demoForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!(demoForm instanceof HTMLFormElement)) return;
+  const formData = new FormData(demoForm);
+  const lead = {
+    company: String(formData.get("company") || "").trim(),
+    name: String(formData.get("name") || "").trim(),
+    contact: String(formData.get("contact") || "").trim(),
+    createdAt: new Date().toISOString()
+  };
+  const leads = JSON.parse(window.localStorage.getItem("pmagic-demo-leads") || "[]");
+  leads.unshift(lead);
+  window.localStorage.setItem("pmagic-demo-leads", JSON.stringify(leads.slice(0, 20)));
+  if (demoStatus) {
+    demoStatus.textContent = "已收到预约信息，我们会尽快联系你。";
+  }
+  demoForm.reset();
+});
 
 document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
   if (!(video instanceof HTMLVideoElement)) return;

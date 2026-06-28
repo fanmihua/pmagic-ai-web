@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Pmagic AI 建工管理矩阵 OS，以多 Agent 协同编排采购、过磅、BIM、财务与企业微信协同。"
+      content="盈泰 AI 建工管理矩阵 OS，以多 Agent 协同编排采购、过磅、BIM、财务与企业微信协同。"
     />
-    <title>Pmagic AI 建工管理矩阵 OS</title>
+    <title>盈泰 AI 建工管理矩阵 OS</title>
     <link rel="icon" href="assets/images/pmagic-logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260620-mobile-fixed-header" />
+    <link rel="stylesheet" href="styles.css?v=20260628-agent-title-tight-v4" />
   </head>
   <body>
     <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -42,7 +42,7 @@
           <a href="#whitepaper">白皮书</a>
         </nav>
 
-        <a class="btn btn-primary nav-cta" href="#demo">预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+        <a class="btn btn-primary nav-cta" href="#demo" data-demo-open>预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
       </div>
     </header>
 
@@ -50,17 +50,13 @@
       <section class="hero section" id="position" aria-labelledby="hero-title">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <div class="product-pill">
-              <span class="mini-orbit" aria-hidden="true"></span>
-              盈泰 AI 建工管理矩阵 OS
-            </div>
-            <h1 id="hero-title"><span class="hero-line">建工领域专属的</span><span>超级工程大脑</span></h1>
+            <h1 id="hero-title"><span class="hero-line">盈泰 AI 建工管理矩阵 OS</span><span>超级工程大脑</span></h1>
             <p>
               以多 Agent 协同架构，打通采购、过磅、BIM、财务与企业微信协同，
               让工程管理从人工经验驱动升级为数据智能驱动。
             </p>
             <div class="actions">
-              <a class="btn btn-primary" href="#demo">预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a class="btn btn-primary" href="#demo" data-demo-open>预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
               <a class="btn btn-secondary" href="#agents">查看更多 Agent 架构<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
             </div>
           </div>
@@ -108,7 +104,7 @@
               <div>
                 <h3>采购响应</h3>
                 <strong>26<span>h</span></strong>
-                <p>供需深度偏差全链路响应，比原计划提前 38 小时。</p>
+                <p>供需深度偏差全链路响应，项目关键节点提前 62 天锁定风险。</p>
               </div>
               <div class="asset-frame mini-asset" data-asset-label="采购响应图">
                 <img src="assets/images/metric-procurement.webp" data-fallback="assets/images/metric-procurement.png" alt="采购响应效率提升" decoding="async" />
@@ -118,8 +114,8 @@
             <article class="metric-card">
               <div>
                 <h3>成本降低</h3>
-                <strong>2.1<span>%</span></strong>
-                <p>智能比价与供应链推荐，项目采购成本可控。</p>
+                <strong>12.6<span>%</span></strong>
+                <p>智能比价与供应链推荐，真实项目成本显著下降。</p>
               </div>
               <div class="asset-frame mini-asset" data-asset-label="成本降低图">
                 <img src="assets/images/metric-cost.webp" data-fallback="assets/images/metric-cost.png" alt="成本降低" decoding="async" />
@@ -155,32 +151,52 @@
           </h2>
           <div class="pain-grid">
             <article class="pain-card">
-              <img class="pain-icon" src="assets/images/pain-progress.webp" data-fallback="assets/images/pain-progress.png" alt="" aria-hidden="true" decoding="async" />
-              <div>
-                <h3>进度黑箱</h3>
-                <p>计划与现场脱节，进度滞后无法及时预警。</p>
+              <div class="pain-card-head">
+                <div>
+                  <h3>进度黑箱</h3>
+                  <p>计划与现场脱节，进度滞后无法及时预警。</p>
+                </div>
               </div>
+              <picture class="pain-scene">
+                <source srcset="assets/images/pain-scenes/pain-progress-scene.webp" type="image/webp" />
+                <img src="assets/images/pain-scenes/pain-progress-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              </picture>
             </article>
             <article class="pain-card">
-              <img class="pain-icon" src="assets/images/pain-materials.webp" data-fallback="assets/images/pain-materials.png" alt="" aria-hidden="true" decoding="async" />
-              <div>
-                <h3>材料黑箱</h3>
-                <p>材料需求不明，浪费严重，缺料与积压并存。</p>
+              <div class="pain-card-head">
+                <div>
+                  <h3>材料黑箱</h3>
+                  <p>材料需求不清，浪费严重，缺料导致返工停工。</p>
+                </div>
               </div>
+              <picture class="pain-scene">
+                <source srcset="assets/images/pain-scenes/pain-materials-scene.webp" type="image/webp" />
+                <img src="assets/images/pain-scenes/pain-materials-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              </picture>
             </article>
             <article class="pain-card">
-              <img class="pain-icon" src="assets/images/pain-cost.webp" data-fallback="assets/images/pain-cost.png" alt="" aria-hidden="true" decoding="async" />
-              <div>
-                <h3>成本黑箱</h3>
-                <p>成本核算滞后，超支风险难以及时发现。</p>
+              <div class="pain-card-head">
+                <div>
+                  <h3>成本黑箱</h3>
+                  <p>成本核算滞后，超支风险难以及时发现。</p>
+                </div>
               </div>
+              <picture class="pain-scene">
+                <source srcset="assets/images/pain-scenes/pain-cost-scene.webp" type="image/webp" />
+                <img src="assets/images/pain-scenes/pain-cost-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              </picture>
             </article>
             <article class="pain-card">
-              <img class="pain-icon" src="assets/images/pain-collaboration.webp" data-fallback="assets/images/pain-collaboration.png" alt="" aria-hidden="true" decoding="async" />
-              <div>
-                <h3>协同黑箱</h3>
-                <p>跨部门信息不通，决策链长，执行效率低下。</p>
+              <div class="pain-card-head">
+                <div>
+                  <h3>协同黑箱</h3>
+                  <p>跨部门信息不通，决策滞后，执行效率低下。</p>
+                </div>
               </div>
+              <picture class="pain-scene">
+                <source srcset="assets/images/pain-scenes/pain-collaboration-scene.webp" type="image/webp" />
+                <img src="assets/images/pain-scenes/pain-collaboration-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              </picture>
             </article>
           </div>
         </div>
@@ -193,24 +209,24 @@
           </h2>
           <div class="architecture-grid">
             <div class="asset-frame architecture-visual" data-asset-label="架构区工程大脑">
-              <picture>
+              <picture class="architecture-core-visual">
                 <source
                   type="image/webp"
-                  srcset="assets/images/logo-3d-360.webp 360w, assets/images/logo-3d-480.webp 480w, assets/images/logo-3d.webp 640w"
-                  sizes="(max-width: 620px) 72vw, 400px"
+                  srcset="assets/images/agent-hub/architecture-agent-ai-360.webp 360w, assets/images/agent-hub/architecture-agent-ai-480.webp 480w, assets/images/agent-hub/architecture-agent-ai.webp 640w, assets/images/agent-hub/architecture-agent-ai-960.webp 960w, assets/images/agent-hub/architecture-agent-ai-1254.webp 1254w"
+                  sizes="(max-width: 620px) calc(100vw - 28px), (max-width: 860px) 96vw, 560px"
                 />
                 <img
                   class="architecture-core-logo"
-                  src="assets/images/logo-3d-480.png"
-                  srcset="assets/images/logo-3d-360.png 360w, assets/images/logo-3d-480.png 480w, assets/images/logo-3d.png 640w"
-                  sizes="(max-width: 620px) 72vw, 400px"
+                  src="assets/images/agent-hub/architecture-agent-ai-480.png"
+                  srcset="assets/images/agent-hub/architecture-agent-ai-360.png 360w, assets/images/agent-hub/architecture-agent-ai-480.png 480w, assets/images/agent-hub/architecture-agent-ai.png 640w, assets/images/agent-hub/architecture-agent-ai-960.png 960w, assets/images/agent-hub/architecture-agent-ai-1254.png 1254w"
+                  sizes="(max-width: 620px) calc(100vw - 28px), (max-width: 860px) 96vw, 560px"
                   alt="多业务 Agent 编排架构"
                   decoding="async"
                   loading="lazy"
                   fetchpriority="low"
                 />
               </picture>
-              <div class="visual-placeholder"><span>logo-3d.png</span></div>
+              <div class="visual-placeholder"><span>architecture-agent-ai.png</span></div>
               <div class="orbit orbit-one"></div>
               <div class="orbit orbit-two"></div>
               <span class="agent-connector connector-top" aria-hidden="true"></span>
@@ -348,38 +364,40 @@
       <section class="section case-section" id="case" aria-labelledby="case-title">
         <div class="container">
           <h2 class="section-title" id="case-title">从真实项目中验证的<span class="title-accent">智能闭环</span></h2>
-          <div class="case-card">
-            <div class="asset-frame case-image" data-asset-label="案例楼盘图">
-              <img src="assets/images/case-city.webp" data-fallback="assets/images/case-city.png" alt="湖州织东控规单元项目" decoding="async" />
-              <div class="visual-placeholder"><span>case-city.png</span></div>
-            </div>
-            <div class="case-content">
-              <div class="case-heading">
-                <h3>湖州织东控规单元项目</h3>
-                <span>真实案例</span>
+          <div class="case-list">
+            <div class="case-card">
+              <div class="asset-frame case-image" data-asset-label="案例楼盘图">
+                <img src="assets/images/case-city.webp" data-fallback="assets/images/case-city.png" alt="湖州织东控规单元项目" decoding="async" />
+                <div class="visual-placeholder"><span>case-city.png</span></div>
               </div>
-              <p>
-                项目总规划面积约 15 万㎡，正处于主供货的施工高峰期，
-                对钢筋等主材的供应要求很高。
-              </p>
-              <p>
-                Pmagic AI 建工管理矩阵 OS 通过多 Agent 协同，快速完成采购全流程任务，
-                保障现场施工不断档。
-              </p>
-              <div class="case-stats">
-                <div><span>全流程</span><strong>26 小时</strong><small>完成采购全链路</small></div>
-                <div><span>提前</span><strong>38 小时</strong><small>比原计划提前</small></div>
-                <div><span>成本下降</span><strong>2.1%</strong><small>采购成本降低</small></div>
-                <div><span>间接损失减少</span><strong>8 万元</strong><small>停工损失降低</small></div>
+              <div class="case-content">
+                <div class="case-heading">
+                  <h3>湖州织东控规单元项目</h3>
+                  <span>真实案例</span>
+                </div>
+                <p>
+                  项目总规划面积约 15 万㎡，正处于主供货的施工高峰期，
+                  对钢筋等主材的供应要求很高。
+                </p>
+                <p>
+                  盈泰 AI 建工管理矩阵 OS 通过多 Agent 协同，快速完成采购全流程任务，
+                  保障现场施工不断档。
+                </p>
+                <div class="case-stats">
+                  <div><span>全流程</span><strong>26 小时</strong><small>完成采购全链路</small></div>
+                  <div><span>提前</span><strong>62 天</strong><small>比原计划提前</small></div>
+                  <div><span>成本下降</span><strong>12.6%</strong><small>采购成本降低</small></div>
+                  <div><span>间接损失减少</span><strong>529.7 万</strong><small>停工损失降低</small></div>
+                </div>
+                <ol class="timeline">
+                  <li><span></span><b>需求识别</b><small>0h</small></li>
+                  <li><span></span><b>供应商匹配</b><small>2h</small></li>
+                  <li><span></span><b>在线询比价</b><small>6h</small></li>
+                  <li><span></span><b>合同签署</b><small>10h</small></li>
+                  <li><span></span><b>过磅追踪</b><small>24h</small></li>
+                  <li><span></span><b>保供闭环</b><small>提前 62 天</small></li>
+                </ol>
               </div>
-              <ol class="timeline">
-                <li><span></span><b>需求识别</b><small>0h</small></li>
-                <li><span></span><b>供应商匹配</b><small>2h</small></li>
-                <li><span></span><b>在线询比价</b><small>6h</small></li>
-                <li><span></span><b>合同签署</b><small>10h</small></li>
-                <li><span></span><b>过磅追踪</b><small>24h</small></li>
-                <li><span></span><b>保供闭环</b><small>26h</small></li>
-              </ol>
             </div>
           </div>
         </div>
@@ -394,7 +412,7 @@
             </div>
             <div class="whitepaper-grid">
               <div class="asset-frame books-asset" data-asset-label="白皮书书本">
-                <img src="assets/images/whitepaper-books-cover.png" data-fallback="assets/images/whitepaper-books-cover.webp" alt="Pmagic AI 建工管理矩阵 OS 白皮书 2026" decoding="async" />
+                <img src="assets/images/whitepaper-books-cover.png" data-fallback="assets/images/whitepaper-books-cover.webp" alt="盈泰 AI 建工管理矩阵 OS 白皮书 2026" decoding="async" />
                 <div class="visual-placeholder"><span>whitepaper-books-cover.png</span></div>
               </div>
               <div class="paper-cards">
@@ -448,9 +466,9 @@
           <div class="final-cta">
             <div>
               <h2 id="demo-title">让你的项目进入<span class="title-accent">智能管理</span>时代</h2>
-              <p>Pmagic AI 建工管理矩阵 OS，助力企业降本增效，赢在未来。</p>
+              <p>盈泰 AI 建工管理矩阵 OS，助力企业降本增效，赢在未来。</p>
               <div class="actions">
-                <a class="btn btn-primary" href="mailto:service@pmagic.ai">预约产品演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+                <button class="btn btn-primary" type="button" data-demo-open>预约产品演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></button>
                 <a class="btn btn-secondary" href="mailto:service@pmagic.ai">获取解决方案<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
               </div>
             </div>
@@ -469,7 +487,7 @@
           <a class="brand" href="#top" aria-label="Pmagic AI 首页">
             <img class="brand-logo" src="assets/images/pmagic-logo.svg" alt="Pmagic AI" />
           </a>
-          <p>盈泰 AI 建工管理 OS，建工领域专属的超级工程大脑，以多 Agent 协同驱动企业管理从经验走向智能。</p>
+          <p>盈泰 AI 建工管理矩阵 OS，以多 Agent 协同驱动企业管理从经验走向智能。</p>
           <div class="socials" aria-label="社交链接">
             <a href="#" aria-label="微信"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg></a>
             <a href="#" aria-label="社区"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#users"></use></svg></a>
@@ -528,6 +546,36 @@
       </div>
     </footer>
 
-    <script src="script.js?v=20260620-mobile-fixed-header"></script>
+    <div class="demo-modal" data-demo-modal hidden>
+      <div class="demo-modal__backdrop" data-demo-close></div>
+      <div class="demo-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="demo-form-title">
+        <button class="demo-modal__close" type="button" aria-label="关闭弹窗" data-demo-close>
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="demo-modal__head">
+          <span>产品预览演示</span>
+          <h2 id="demo-form-title">预约盈泰 AI 产品演示</h2>
+          <p>留下联系信息，我们会根据你的项目场景安排演示。</p>
+        </div>
+        <form class="demo-form" data-demo-form>
+          <label>
+            <span>公司名</span>
+            <input type="text" name="company" autocomplete="organization" required placeholder="请输入公司名称">
+          </label>
+          <label>
+            <span>联系人</span>
+            <input type="text" name="name" autocomplete="name" required placeholder="请输入联系人姓名">
+          </label>
+          <label>
+            <span>联系方式</span>
+            <input type="text" name="contact" autocomplete="tel" required placeholder="手机号 / 微信 / 邮箱">
+          </label>
+          <button class="btn btn-primary" type="submit">提交预约<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></button>
+          <p class="demo-form__status" data-demo-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js?v=20260627-no-pain-bg"></script>
   </body>
 </html>
