@@ -481,8 +481,8 @@ function renderWhitepaperSection(whitepaperSection) {
   const cards = (whitepaperSection.whitepapers || [])
     .map((paper) => {
       const previewUrl = mediaUrl(paper.preview, "assets/images/whitepaper-agent-orchestrator.webp");
-      const onlineUrl = paper.onlineUrl || "#whitepaper-title";
       const downloadUrl = paper.downloadUrl || `/api/public/whitepapers/${paper.slug}/download`;
+      const onlineUrl = paper.onlineUrl || paper.document?.url || downloadUrl;
       return `
         <article class="paper-card">
           <span class="bookmark" aria-hidden="true"></span>
