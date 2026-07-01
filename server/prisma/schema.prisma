@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum MediaKind {
+  IMAGE
+  DOCUMENT
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String     @map("password_hash")
+  role         UserRole   @default(EDITOR)
+  status       UserStatus @default(ACTIVE)
+  lastLoginAt  DateTime?  @map("last_login_at")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  sessions Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  revokedAt DateTime? @map("revoked_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model MediaAsset {
+  id           String    @id @default(cuid())
+  kind         MediaKind
+  filename     String
+  originalName String    @map("original_name")
+  mimeType     String    @map("mime_type")
+  sizeBytes    Int       @default(0) @map("size_bytes")
+  storagePath  String    @map("storage_path")
+  publicUrl    String    @unique @map("public_url")
+  width        Int?
+  height       Int?
+  createdBy    String?   @map("created_by")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  whitepaperCovers   WhitepaperSection[] @relation("WhitepaperSectionCover")
+  whitepaperPreviews Whitepaper[]        @relation("WhitepaperPreview")
+  whitepaperDocs     Whitepaper[]        @relation("WhitepaperDocument")
+  caseImages         CaseStudy[]         @relation("CaseImage")
+
+  @@map("media_assets")
+}
+
+model CaseSection {
+  id        String        @id @default(cuid())
+  title     String
+  status    ContentStatus @default(PUBLISHED)
+  updatedAt DateTime      @updatedAt @map("updated_at")
+
+  @@map("case_sections")
+}
+
+model CaseStudy {
+  id                String        @id @default(cuid())
+  slug              String        @unique
+  title             String
+  badge             String
+  imageAssetId      String?       @map("image_asset_id")
+  summaryParagraphs Json          @default("[]") @map("summary_paragraphs")
+  sortOrder         Int           @default(0) @map("sort_order")
+  status            ContentStatus @default(DRAFT)
+  publishedAt       DateTime?     @map("published_at")
+  createdBy         String?       @map("created_by")
+  updatedBy         String?       @map("updated_by")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+
+  image         MediaAsset?        @relation("CaseImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+  metrics       CaseMetric[]
+  timelineSteps CaseTimelineStep[]
+
+  @@index([status, sortOrder])
+  @@map("case_studies")
+}
+
+model CaseMetric {
+  id          String @id @default(cuid())
+  caseId      String @map("case_id")
+  label       String
+  value       String
+  description String
+  sortOrder   Int    @default(0) @map("sort_order")
+
+  case CaseStudy @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId, sortOrder])
+  @@map("case_metrics")
+}
+
+model CaseTimelineStep {
+  id        String @id @default(cuid())
+  caseId    String @map("case_id")
+  title     String
+  timeLabel String @map("time_label")
+  sortOrder Int    @default(0) @map("sort_order")
+
+  case CaseStudy @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId, sortOrder])
+  @@map("case_timeline_steps")
+}
+
+model WhitepaperSection {
+  id           String        @id @default(cuid())
+  title        String
+  description  String
+  coverAssetId String?       @map("cover_asset_id")
+  status       ContentStatus @default(PUBLISHED)
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  cover MediaAsset? @relation("WhitepaperSectionCover", fields: [coverAssetId], references: [id], onDelete: SetNull)
+
+  @@map("whitepaper_sections")
+}
+
+model Whitepaper {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  title           String
+  summary         String
+  previewAssetId  String?       @map("preview_asset_id")
+  documentAssetId String?       @map("document_asset_id")
+  onlineUrl       String?       @map("online_url")
+  downloadUrl     String?       @map("download_url")
+  sortOrder       Int           @default(0) @map("sort_order")
+  status          ContentStatus @default(DRAFT)
+  publishedAt     DateTime?     @map("published_at")
+  createdBy       String?       @map("created_by")
+  updatedBy       String?       @map("updated_by")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  preview  MediaAsset? @relation("WhitepaperPreview", fields: [previewAssetId], references: [id], onDelete: SetNull)
+  document MediaAsset? @relation("WhitepaperDocument", fields: [documentAssetId], references: [id], onDelete: SetNull)
+
+  @@index([status, sortOrder])
+  @@map("whitepapers")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?  @map("actor_id")
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String?  @map("entity_id")
+  before     Json?
+  after      Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([entityType, entityId])
+  @@map("audit_logs")
+}

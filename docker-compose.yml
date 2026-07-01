@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: pmagic_ai_web
+      POSTGRES_USER: pmagic
+      POSTGRES_PASSWORD: pmagic
+    ports:
+      - "5432:5432"
+    volumes:
+      - pmagic-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pmagic -d pmagic_ai_web"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://pmagic:pmagic@postgres:5432/pmagic_ai_web
+      SESSION_SECRET: change-me-to-a-long-random-string
+      ADMIN_BOOTSTRAP_EMAIL: admin@pmagic.local
+      ADMIN_BOOTSTRAP_PASSWORD: ChangeMe123!
+      PUBLIC_BASE_URL: http://localhost:5173
+      UPLOAD_DIR: /app/uploads
+      PORT: 5173
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pmagic-postgres:

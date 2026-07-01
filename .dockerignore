@@ -1,0 +1,14 @@
+.git
+.DS_Store
+.playwright-cli
+output
+reference
+node_modules
+server/node_modules
+server/dist
+server/uploads
+admin/node_modules
+admin/dist
+dist
+build
+.next
