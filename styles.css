@@ -2193,12 +2193,79 @@ body.is-demo-modal-open {
   flex: 0 0 auto;
 }
 
-.pdf-modal__frame {
+.pdf-modal__viewer {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    linear-gradient(180deg, rgba(247, 248, 255, 0.96), rgba(238, 242, 255, 0.96)),
+    #f7f8ff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pdf-modal__viewer:focus-visible {
+  outline: 2px solid rgba(96, 123, 255, 0.45);
+  outline-offset: -2px;
+}
+
+.pdf-modal__status {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  min-height: 40px;
+  padding: 10px 18px;
+  color: rgba(20, 22, 67, 0.62);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  background: rgba(247, 248, 255, 0.88);
+  border-bottom: 1px solid rgba(96, 123, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.pdf-modal__status:empty {
+  display: none;
+}
+
+.pdf-modal__pages {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  padding: 18px;
+}
+
+.pdf-page {
+  display: grid;
+  place-items: center;
+  width: min(920px, 100%);
+  min-height: 220px;
+  padding: 12px;
+  border: 1px solid rgba(96, 123, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  color: rgba(20, 22, 67, 0.48);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 10px 28px rgba(33, 43, 112, 0.1);
+}
+
+.pdf-page canvas {
   display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: #f7f8ff;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.pdf-page.is-rendering {
+  min-height: 320px;
+}
+
+.pdf-page.is-error {
+  border-color: rgba(255, 92, 150, 0.22);
+  color: rgba(156, 43, 83, 0.72);
 }
 
 .demo-form label {
@@ -4010,6 +4077,23 @@ body.is-demo-modal-open {
   .pdf-modal__close {
     width: 36px;
     height: 36px;
+  }
+
+  .pdf-modal__status {
+    min-height: 36px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .pdf-modal__pages {
+    gap: 12px;
+    padding: 12px 8px 18px;
+  }
+
+  .pdf-page {
+    min-height: 180px;
+    padding: 7px;
+    border-radius: 10px;
   }
 
   .timeline {
