@@ -24,6 +24,7 @@ COPY --from=build /app/server/dist ./server/dist
 COPY --from=build /app/server/prisma ./server/prisma
 COPY index.html styles.css script.js ./
 COPY assets ./assets
+COPY uploads ./uploads
 COPY --from=admin-build /app/admin/dist ./admin/dist
 WORKDIR /app/server
 EXPOSE 5173

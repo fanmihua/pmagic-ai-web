@@ -25,16 +25,15 @@ services:
       ADMIN_BOOTSTRAP_EMAIL: admin@pmagic.local
       ADMIN_BOOTSTRAP_PASSWORD: ChangeMe123!
       PUBLIC_BASE_URL: http://localhost:5173
-      UPLOAD_DIR: /app/server/uploads
+      UPLOAD_DIR: /app/uploads
       PORT: 5173
     ports:
       - "5173:5173"
     volumes:
-      - pmagic-uploads:/app/server/uploads
+      - ./uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
   pmagic-postgres:
-  pmagic-uploads:

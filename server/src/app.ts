@@ -1,3 +1,4 @@
+import { createReadStream } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { pipeline } from "node:stream/promises";
@@ -62,6 +63,27 @@ const sectionPayloadSchema = z.object({
   whitepaperDescription: z.string().min(1),
   whitepaperCoverUrl: z.string().min(1).optional().nullable()
 });
+
+function resolvePublicFilePath(publicUrl: string) {
+  const [pathname] = publicUrl.split("?");
+  const routes = [
+    { prefix: "/uploads/", root: paths.uploadDir },
+    { prefix: "/assets/", root: path.join(paths.projectRoot, "assets") }
+  ];
+  const route = routes.find((item) => pathname.startsWith(item.prefix));
+  if (!route) return null;
+
+  const relativePath = pathname.slice(route.prefix.length);
+  const normalized = path.normalize(relativePath).replace(/^(\.\.(\/|\\|$))+/, "");
+  const filePath = path.resolve(route.root, normalized);
+  const relativeToRoot = path.relative(route.root, filePath);
+  return relativeToRoot && !relativeToRoot.startsWith("..") && !path.isAbsolute(relativeToRoot) ? filePath : null;
+}
+
+function contentDispositionFilename(filename: string) {
+  const fallback = filename.replace(/[^\w.-]+/g, "-") || "whitepaper.pdf";
+  return `attachment; filename="${fallback}"; filename*=UTF-8''${encodeURIComponent(filename)}`;
+}
 
 function makeSlug(input: string) {
   return input
@@ -169,7 +191,25 @@ app.get("/api/public/whitepapers/:slug/download", async (request, reply) => {
   const paper = await prisma.whitepaper.findUnique({ where: { slug }, include: { document: true } });
 
   if (!paper || paper.status !== "PUBLISHED") return reply.code(404).send({ error: "NOT_FOUND" });
-  if (paper.document?.publicUrl) return reply.redirect(paper.document.publicUrl);
+  if (paper.document?.publicUrl) {
+    const filePath = resolvePublicFilePath(paper.document.publicUrl);
+    if (filePath) {
+      try {
+        const stat = await fs.stat(filePath);
+        if (stat.isFile()) {
+          return reply
+            .type(paper.document.mimeType || "application/pdf")
+            .header("Content-Length", stat.size)
+            .header("Content-Disposition", contentDispositionFilename(paper.document.originalName || `${paper.slug}.pdf`))
+            .send(createReadStream(filePath));
+        }
+      } catch {
+        return reply.code(404).send({ error: "FILE_NOT_FOUND" });
+      }
+    }
+
+    return reply.redirect(paper.document.publicUrl);
+  }
   if (paper.downloadUrl) return reply.redirect(paper.downloadUrl);
 
   return reply.code(404).send({ error: "DOWNLOAD_NOT_CONFIGURED" });

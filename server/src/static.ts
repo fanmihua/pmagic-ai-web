@@ -20,8 +20,15 @@ const mimeTypes: Record<string, string> = {
 function sendFile(reply: FastifyReply, root: string, relativePath: string) {
   const normalized = path.normalize(relativePath).replace(/^(\.\.(\/|\\|$))+/, "");
   const filePath = path.resolve(root, normalized);
+  const relativeToRoot = path.relative(root, filePath);
 
-  if (!filePath.startsWith(root) || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+  if (
+    !relativeToRoot ||
+    relativeToRoot.startsWith("..") ||
+    path.isAbsolute(relativeToRoot) ||
+    !fs.existsSync(filePath) ||
+    !fs.statSync(filePath).isFile()
+  ) {
     return reply.code(404).send("Not found");
   }
 
