@@ -7,8 +7,6 @@ output/
 reference/
 test-results/
 
-admin/
-server/
 docs/
 docker-compose.yml
 .dockerignore

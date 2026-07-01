@@ -204,7 +204,7 @@ app.get("/api/public/whitepapers/:slug/download", async (request, reply) => {
             .send(createReadStream(filePath));
         }
       } catch {
-        return reply.code(404).send({ error: "FILE_NOT_FOUND" });
+        return reply.redirect(paper.document.publicUrl);
       }
     }
 
@@ -430,9 +430,18 @@ app.post("/api/admin/media", { preHandler: requireRole(["ADMIN", "EDITOR"]) }, a
 
 registerStaticRoutes(app);
 
-try {
-  await app.listen({ host: "0.0.0.0", port: env.PORT });
-} catch (error) {
-  app.log.error(error);
-  process.exit(1);
+export { app };
+
+export async function getApp() {
+  await app.ready();
+  return app;
+}
+
+if (process.env.VERCEL !== "1") {
+  try {
+    await app.listen({ host: "0.0.0.0", port: env.PORT });
+  } catch (error) {
+    app.log.error(error);
+    process.exit(1);
+  }
 }
