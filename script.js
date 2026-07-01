@@ -544,10 +544,18 @@ const demoForm = document.querySelector("[data-demo-form]");
 const demoStatus = document.querySelector("[data-demo-status]");
 const pdfModal = document.querySelector("[data-pdf-modal]");
 const pdfDialog = pdfModal?.querySelector(".pdf-modal__dialog");
-const pdfFrame = document.querySelector("[data-pdf-frame]");
+const pdfViewer = document.querySelector("[data-pdf-viewer]");
+const pdfPages = document.querySelector("[data-pdf-pages]");
+const pdfStatus = document.querySelector("[data-pdf-status]");
 const pdfTitle = document.querySelector("[data-pdf-modal-title]");
 const pdfDownload = document.querySelector("[data-pdf-modal-download]");
 let lastFocusedElement = null;
+let pdfRenderToken = 0;
+let pdfObserver = null;
+let pdfLoadingTask = null;
+let pdfDocument = null;
+let pdfScrollHandler = null;
+let pdfScrollRaf = 0;
 
 function setModalOpenState(isOpen) {
   document.body.classList.toggle("is-demo-modal-open", isOpen);
@@ -576,8 +584,183 @@ function closeDemoModal() {
   }, 180);
 }
 
+function setPdfStatus(message) {
+  if (pdfStatus) pdfStatus.textContent = message;
+}
+
+function clearPdfPreview() {
+  pdfRenderToken += 1;
+  pdfObserver?.disconnect();
+  pdfObserver = null;
+  if (pdfScrollHandler && pdfViewer instanceof HTMLElement) {
+    pdfViewer.removeEventListener("scroll", pdfScrollHandler);
+    window.removeEventListener("resize", pdfScrollHandler);
+  }
+  pdfScrollHandler = null;
+  if (pdfScrollRaf) {
+    window.cancelAnimationFrame(pdfScrollRaf);
+    pdfScrollRaf = 0;
+  }
+  pdfLoadingTask?.destroy?.();
+  pdfLoadingTask = null;
+  pdfDocument?.destroy?.();
+  pdfDocument = null;
+  if (pdfPages) pdfPages.innerHTML = "";
+  setPdfStatus("");
+}
+
+function ensurePdfJs() {
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = "assets/vendor/pdfjs/pdf.worker.min.js";
+    return Promise.resolve(window.pdfjsLib);
+  }
+
+  return new Promise((resolve, reject) => {
+    const existingScript = document.querySelector('script[data-pdfjs-loader="true"]');
+    const script = existingScript || document.createElement("script");
+
+    script.addEventListener(
+      "load",
+      () => {
+        if (!window.pdfjsLib) {
+          reject(new Error("PDF.js failed to initialize"));
+          return;
+        }
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = "assets/vendor/pdfjs/pdf.worker.min.js";
+        resolve(window.pdfjsLib);
+      },
+      { once: true }
+    );
+    script.addEventListener("error", () => reject(new Error("PDF.js failed to load")), { once: true });
+
+    if (!existingScript) {
+      script.src = "assets/vendor/pdfjs/pdf.min.js";
+      script.defer = true;
+      script.dataset.pdfjsLoader = "true";
+      document.head.appendChild(script);
+    }
+  });
+}
+
+async function renderPdfPage(pdf, pageNumber, shell, token) {
+  if (token !== pdfRenderToken || shell.dataset.renderState) return;
+  shell.dataset.renderState = "rendering";
+  shell.classList.add("is-rendering");
+
+  try {
+    const page = await pdf.getPage(pageNumber);
+    if (token !== pdfRenderToken) return;
+
+    const baseViewport = page.getViewport({ scale: 1 });
+    const viewerWidth = pdfViewer instanceof HTMLElement ? pdfViewer.clientWidth : window.innerWidth;
+    const availableWidth = Math.min(920, Math.max(260, viewerWidth - 36));
+    const cssScale = Math.min(1.35, Math.max(0.48, availableWidth / baseViewport.width));
+    const outputScale = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+    const renderViewport = page.getViewport({ scale: cssScale * outputScale });
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d", { alpha: false });
+    if (!context) throw new Error("Canvas is not available");
+
+    canvas.width = Math.floor(renderViewport.width);
+    canvas.height = Math.floor(renderViewport.height);
+    canvas.style.width = `${Math.floor(baseViewport.width * cssScale)}px`;
+    canvas.style.height = `${Math.floor(baseViewport.height * cssScale)}px`;
+    canvas.setAttribute("aria-label", `第 ${pageNumber} 页`);
+
+    await page.render({ canvasContext: context, viewport: renderViewport }).promise;
+    if (token !== pdfRenderToken) return;
+
+    shell.replaceChildren(canvas);
+    shell.classList.remove("is-rendering");
+    shell.classList.add("is-rendered");
+    shell.dataset.renderState = "rendered";
+  } catch {
+    shell.classList.remove("is-rendering");
+    shell.classList.add("is-error");
+    shell.dataset.renderState = "error";
+    shell.textContent = `第 ${pageNumber} 页加载失败`;
+  }
+}
+
+async function renderPdfPreview(pdfUrl) {
+  if (!pdfPages || !(pdfViewer instanceof HTMLElement)) return;
+  clearPdfPreview();
+  const token = pdfRenderToken;
+  setPdfStatus("正在加载预览...");
+
+  try {
+    const pdfjsLib = await ensurePdfJs();
+    if (token !== pdfRenderToken) return;
+
+    pdfLoadingTask = pdfjsLib.getDocument({ url: pdfUrl });
+    pdfDocument = await pdfLoadingTask.promise;
+    if (token !== pdfRenderToken) return;
+
+    setPdfStatus(`共 ${pdfDocument.numPages} 页，向下滚动浏览`);
+    const fragment = document.createDocumentFragment();
+    const pageShells = [];
+
+    for (let pageNumber = 1; pageNumber <= pdfDocument.numPages; pageNumber += 1) {
+      const shell = document.createElement("section");
+      shell.className = "pdf-page";
+      shell.dataset.pageNumber = String(pageNumber);
+      shell.setAttribute("aria-label", `第 ${pageNumber} 页`);
+      shell.textContent = `第 ${pageNumber} 页`;
+      fragment.appendChild(shell);
+      pageShells.push(shell);
+    }
+
+    pdfPages.replaceChildren(fragment);
+    pdfViewer.scrollTop = 0;
+
+    const renderVisiblePages = () => {
+      if (token !== pdfRenderToken || !(pdfViewer instanceof HTMLElement)) return;
+      const viewerRect = pdfViewer.getBoundingClientRect();
+      const preloadTop = viewerRect.top - 900;
+      const preloadBottom = viewerRect.bottom + 900;
+      pageShells.forEach((shell) => {
+        if (shell.dataset.renderState === "rendered" || shell.dataset.renderState === "rendering") return;
+        const rect = shell.getBoundingClientRect();
+        if (rect.bottom >= preloadTop && rect.top <= preloadBottom) {
+          renderPdfPage(pdfDocument, Number(shell.dataset.pageNumber), shell, token);
+        }
+      });
+    };
+
+    pdfScrollHandler = () => {
+      if (pdfScrollRaf) return;
+      pdfScrollRaf = window.requestAnimationFrame(() => {
+        pdfScrollRaf = 0;
+        renderVisiblePages();
+      });
+    };
+    pdfViewer.addEventListener("scroll", pdfScrollHandler, { passive: true });
+    window.addEventListener("resize", pdfScrollHandler);
+
+    pdfObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const shell = entry.target;
+          const pageNumber = Number(shell.dataset.pageNumber);
+          renderPdfPage(pdfDocument, pageNumber, shell, token);
+          if (shell.dataset.renderState === "rendered") pdfObserver?.unobserve(shell);
+        });
+      },
+      { root: pdfViewer, rootMargin: "900px 0px", threshold: 0.01 }
+    );
+
+    pageShells.forEach((shell) => pdfObserver?.observe(shell));
+    renderVisiblePages();
+  } catch {
+    if (token !== pdfRenderToken) return;
+    if (pdfPages) pdfPages.innerHTML = "";
+    setPdfStatus("预览加载失败，请下载白皮书查看。");
+  }
+}
+
 function openPdfModal(control) {
-  if (!pdfModal || !(pdfFrame instanceof HTMLIFrameElement)) return;
+  if (!pdfModal || !(pdfViewer instanceof HTMLElement)) return;
   const pdfUrl = control.dataset.pdfUrl || control.getAttribute("href") || "";
   if (!pdfUrl || pdfUrl.startsWith("#")) return;
 
@@ -592,17 +775,17 @@ function openPdfModal(control) {
   setModalOpenState(true);
   window.setTimeout(() => {
     pdfModal.classList.add("is-open");
-    pdfFrame.src = pdfUrl;
+    renderPdfPreview(pdfUrl);
     pdfModal.querySelector("[data-pdf-close]")?.focus();
   }, 0);
 }
 
 function closePdfModal() {
-  if (!pdfModal || !(pdfFrame instanceof HTMLIFrameElement)) return;
+  if (!pdfModal) return;
   pdfModal.classList.remove("is-open");
   setModalOpenState(false);
+  clearPdfPreview();
   window.setTimeout(() => {
-    pdfFrame.removeAttribute("src");
     pdfModal.hidden = true;
     if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
   }, 180);

@@ -9,7 +9,7 @@
     />
     <title>盈泰 AI 建工管理矩阵 OS</title>
     <link rel="icon" href="assets/images/pmagic-logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260701-whitepaper-body-center" />
+    <link rel="stylesheet" href="styles.css?v=20260701-pdfjs-preview" />
   </head>
   <body>
     <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -596,10 +596,13 @@
             </button>
           </div>
         </div>
-        <iframe class="pdf-modal__frame" data-pdf-frame title="白皮书 PDF 预览"></iframe>
+        <div class="pdf-modal__viewer" data-pdf-viewer tabindex="0" aria-label="白皮书 PDF 预览">
+          <div class="pdf-modal__status" data-pdf-status>正在加载预览...</div>
+          <div class="pdf-modal__pages" data-pdf-pages></div>
+        </div>
       </div>
     </div>
 
-    <script src="script.js?v=20260701-whitepaper-body-center"></script>
+    <script src="script.js?v=20260701-pdfjs-preview"></script>
   </body>
 </html>
