@@ -27,7 +27,7 @@ async function main() {
 
   await prisma.user.upsert({
     where: { email: adminEmail },
-    update: { role: "ADMIN", status: "ACTIVE" },
+    update: { passwordHash, role: "ADMIN", status: "ACTIVE" },
     create: {
       email: adminEmail,
       name: "PMagic 管理员",
