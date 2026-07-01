@@ -556,6 +556,7 @@ let pdfLoadingTask = null;
 let pdfDocument = null;
 let pdfScrollHandler = null;
 let pdfScrollRaf = 0;
+let currentPdfUrl = "";
 
 function setModalOpenState(isOpen) {
   document.body.classList.toggle("is-demo-modal-open", isOpen);
@@ -588,6 +589,10 @@ function setPdfStatus(message) {
   if (pdfStatus) pdfStatus.textContent = message;
 }
 
+function isCompactPdfPreview() {
+  return window.matchMedia("(max-width: 760px)").matches;
+}
+
 function clearPdfPreview() {
   pdfRenderToken += 1;
   pdfObserver?.disconnect();
@@ -607,6 +612,33 @@ function clearPdfPreview() {
   pdfDocument = null;
   if (pdfPages) pdfPages.innerHTML = "";
   setPdfStatus("");
+}
+
+function renderCompactPdfPreview(control, pdfUrl) {
+  if (!pdfPages) return;
+  clearPdfPreview();
+  currentPdfUrl = pdfUrl;
+
+  const card = control.closest(".paper-card");
+  const title = control.dataset.pdfTitle || card?.querySelector("h3")?.textContent?.trim() || "白皮书预览";
+  const summary = card?.querySelector("p")?.textContent?.trim() || "移动端已加载轻量预览，可下载白皮书或继续打开完整在线预览。";
+  const cover = card?.querySelector(".paper-preview img")?.getAttribute("src") || "";
+  const downloadUrl = control.dataset.pdfDownload || pdfUrl;
+
+  setPdfStatus("移动端轻量预览");
+  pdfPages.innerHTML = `
+    <article class="pdf-compact-preview">
+      ${cover ? `<img src="${escapeHtml(cover)}" alt="${escapeHtml(title)}封面" />` : ""}
+      <div>
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(summary)}</p>
+        <div class="pdf-compact-actions">
+          <a class="btn btn-small btn-primary" href="${escapeHtml(downloadUrl)}" download>下载白皮书</a>
+          <button class="btn btn-small btn-secondary" type="button" data-pdf-full-preview>继续完整预览</button>
+        </div>
+      </div>
+    </article>
+  `;
 }
 
 function ensurePdfJs() {
@@ -763,6 +795,7 @@ function openPdfModal(control) {
   if (!pdfModal || !(pdfViewer instanceof HTMLElement)) return;
   const pdfUrl = control.dataset.pdfUrl || control.getAttribute("href") || "";
   if (!pdfUrl || pdfUrl.startsWith("#")) return;
+  currentPdfUrl = pdfUrl;
 
   lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   if (pdfTitle) pdfTitle.textContent = control.dataset.pdfTitle || "白皮书预览";
@@ -775,7 +808,11 @@ function openPdfModal(control) {
   setModalOpenState(true);
   window.setTimeout(() => {
     pdfModal.classList.add("is-open");
-    renderPdfPreview(pdfUrl);
+    if (isCompactPdfPreview()) {
+      renderCompactPdfPreview(control, pdfUrl);
+    } else {
+      renderPdfPreview(pdfUrl);
+    }
     pdfModal.querySelector("[data-pdf-close]")?.focus();
   }, 0);
 }
@@ -812,6 +849,12 @@ document.addEventListener("click", (event) => {
   if (!(control instanceof HTMLAnchorElement)) return;
   event.preventDefault();
   openPdfModal(control);
+});
+
+document.addEventListener("click", (event) => {
+  const control = event.target instanceof Element ? event.target.closest("[data-pdf-full-preview]") : null;
+  if (!(control instanceof HTMLButtonElement) || !currentPdfUrl) return;
+  renderPdfPreview(currentPdfUrl);
 });
 
 document.querySelectorAll("[data-pdf-close]").forEach((control) => {
