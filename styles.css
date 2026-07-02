@@ -549,8 +549,20 @@ main {
   transition: opacity 220ms ease;
 }
 
-.hero-video-poster,
+.hero-video-poster {
+  /*
+    海报图自带透明通道，不需要 multiply 混合来隐藏底色。移动端 Safari / 微信 /
+    国产 WebView 对 mix-blend-mode 叠加多层 mask-composite 支持不稳定，会把浅色的
+    3D 大脑渲染成一整块空白（用户反馈的"手机 hero 不显示"）。这里改为单层 radial
+    遮罩 + normal 混合，兼容性最好，各端都能正常显示。
+  */
+  mix-blend-mode: normal;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 52%, #000 0 60%, rgba(0, 0, 0, 0.55) 78%, transparent 92%);
+  mask-image: radial-gradient(ellipse at 50% 52%, #000 0 60%, rgba(0, 0, 0, 0.55) 78%, transparent 92%);
+}
+
 .hero-video.is-fallback-video {
+  /* mp4 回退视频没有透明通道，桌面端仍用 multiply + 遮罩隐藏底色（移动端不加载视频）。 */
   mix-blend-mode: multiply;
   -webkit-mask-image:
     radial-gradient(ellipse at 50% 52%, #000 0 48%, rgba(0, 0, 0, 0.88) 60%, rgba(0, 0, 0, 0.38) 76%, transparent 91%),
@@ -1392,76 +1404,35 @@ main {
   animation: timelineLineDraw 520ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
 }
 
-.case-list {
+/* ===== 案例卡片轮播：左右按钮 + 圆点 + 自动切换 + 触摸滑动 ===== */
+.case-carousel {
+  position: relative;
   display: grid;
-  gap: 20px;
+  gap: 18px;
 }
 
-.case-switch {
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  margin: -8px 0 14px;
-}
-
-.case-switch::-webkit-scrollbar {
-  display: none;
-}
-
-.case-switch__track {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: max-content;
-  min-width: 100%;
-}
-
-.case-tab {
-  appearance: none;
-  min-width: 0;
-  padding: 7px 12px;
-  border: 1px solid rgba(96, 123, 255, 0.18);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.64);
-  color: var(--text);
-  text-align: center;
-  box-shadow: none;
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    background 180ms ease,
-    color 180ms ease;
-}
-
-.case-tab:hover,
-.case-tab:focus-visible {
-  border-color: rgba(96, 123, 255, 0.42);
-  background: rgba(96, 123, 255, 0.08);
-  box-shadow: none;
-  outline: 0;
-}
-
-.case-tab.is-active {
-  border-color: var(--primary);
-  background: rgba(96, 123, 255, 0.12);
-  color: var(--primary-deep);
-  box-shadow: none;
-}
-
-.case-tab__title {
-  display: block;
-  max-width: 220px;
+.case-viewport {
   overflow: hidden;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  border-radius: var(--radius-xl);
+}
+
+.case-track {
+  display: flex;
+  align-items: stretch;
+  transition: transform 560ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-track {
+    transition: none;
+  }
 }
 
 .case-card {
+  flex: 0 0 100%;
+  width: 100%;
+  box-sizing: border-box;
   padding: 26px 28px;
   border-radius: var(--radius-xl);
   display: grid;
@@ -1470,7 +1441,85 @@ main {
   align-items: end;
 }
 
-.case-card[hidden] {
+.case-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 2px;
+}
+
+.case-arrow {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--glass-line);
+  background: var(--surface);
+  color: var(--primary-deep);
+  box-shadow: var(--soft-shadow);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.case-arrow:hover,
+.case-arrow:focus-visible {
+  border-color: var(--primary);
+  background: rgba(96, 123, 255, 0.1);
+  outline: 0;
+  transform: translateY(-1px);
+}
+
+.case-arrow:active {
+  transform: scale(0.94);
+}
+
+.case-arrow .icon-chevron {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.case-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.case-dot {
+  appearance: none;
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(96, 123, 255, 0.28);
+  cursor: pointer;
+  transition:
+    width 240ms ease,
+    background 240ms ease;
+}
+
+.case-dot:hover {
+  background: rgba(96, 123, 255, 0.52);
+}
+
+.case-dot.is-active {
+  width: 26px;
+  background: linear-gradient(90deg, var(--primary-deep), var(--primary));
+}
+
+.case-carousel.is-single .case-controls {
   display: none;
 }
 
@@ -2548,14 +2597,20 @@ body.is-demo-modal-open {
   }
 }
 
+/*
+  漂浮动画用合成属性 transform 而非 margin-top。margin-top 会逐帧触发重排（主线程、非合成），
+  叠加气泡的 backdrop-filter 后，图标、文字、背景不在同一帧同步重绘，图标看起来比文字慢半拍。
+  改用 transform 后整个气泡作为单个合成层整体移动，内部图标/文字完全同步。
+  transform 与入场动画使用的 translate/scale（独立属性）可叠加合成，不冲突。
+*/
 @keyframes agentBubbleFloat {
   0%,
   100% {
-    margin-top: 0;
+    transform: translateY(0);
   }
 
   50% {
-    margin-top: -5px;
+    transform: translateY(-5px);
   }
 }
 
@@ -3911,26 +3966,6 @@ body.is-demo-modal-open {
   .layer-card p {
     font-size: 13px;
     line-height: 1.45;
-  }
-
-  .case-switch {
-    margin: -6px -14px 12px;
-    padding: 0 14px 4px;
-  }
-
-  .case-switch__track {
-    flex-wrap: nowrap;
-    gap: 10px;
-  }
-
-  .case-tab {
-    flex: 0 0 auto;
-    padding: 7px 11px;
-  }
-
-  .case-tab__title {
-    font-size: 13px;
-    max-width: 186px;
   }
 
   .case-card {

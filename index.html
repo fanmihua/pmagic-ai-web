@@ -9,7 +9,7 @@
     />
     <title>盈泰 AI 建工管理矩阵 OS</title>
     <link rel="icon" href="assets/images/pmagic-logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260701-pdfjs-preview" />
+    <link rel="stylesheet" href="styles.css?v=20260702-pdf-lin" />
   </head>
   <body>
     <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -19,6 +19,95 @@
           <stop offset="100%" stop-color="#607bff" />
         </linearGradient>
       </defs>
+    </svg>
+
+    <!--
+      内联 Lucide 图标 sprite。移动端 Safari / 微信 / 国产 WebView 不支持外链
+      `<use href="外部.svg#id">`，会导致图标不显示，因此改为内联 symbol，`<use href="#id">` 引用。
+    -->
+    <svg class="icon-sprite" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+      <symbol id="arrow-right" viewBox="0 0 24 24">
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+      </symbol>
+      <symbol id="shopping-cart" viewBox="0 0 24 24">
+        <circle cx="8" cy="21" r="1" />
+        <circle cx="19" cy="21" r="1" />
+        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+      </symbol>
+      <symbol id="box" viewBox="0 0 24 24">
+        <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+        <path d="m3.3 7 8.7 5 8.7-5" />
+        <path d="M12 22V12" />
+      </symbol>
+      <symbol id="scale" viewBox="0 0 24 24">
+        <path d="M12 3v18" />
+        <path d="m19 8 3 8a5 5 0 0 1-6 0zV7" />
+        <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1" />
+        <path d="m5 8 3 8a5 5 0 0 1-6 0zV7" />
+        <path d="M7 21h10" />
+      </symbol>
+      <symbol id="yen" viewBox="0 0 24 24">
+        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+        <path d="m9 8 3 3v7" />
+        <path d="m12 11 3-3" />
+        <path d="M9 12h6" />
+        <path d="M9 16h6" />
+      </symbol>
+      <symbol id="messages" viewBox="0 0 24 24">
+        <path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+        <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" />
+      </symbol>
+      <symbol id="calendar" viewBox="0 0 24 24">
+        <path d="M8 2v4" />
+        <path d="M16 2v4" />
+        <rect width="18" height="18" x="3" y="4" rx="2" />
+        <path d="M3 10h18" />
+        <path d="M8 14h.01" />
+        <path d="M12 14h.01" />
+        <path d="M16 14h.01" />
+        <path d="M8 18h.01" />
+        <path d="M12 18h.01" />
+        <path d="M16 18h.01" />
+      </symbol>
+      <symbol id="users" viewBox="0 0 24 24">
+        <path d="M18 21a8 8 0 0 0-16 0" />
+        <circle cx="10" cy="8" r="5" />
+        <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
+      </symbol>
+      <symbol id="database" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+        <path d="M3 12A9 3 0 0 0 21 12" />
+      </symbol>
+      <symbol id="trend" viewBox="0 0 24 24">
+        <path d="M16 7h6v6" />
+        <path d="m22 7-8.5 8.5-5-5L2 17" />
+      </symbol>
+      <symbol id="blocks" viewBox="0 0 24 24">
+        <path d="M12 3v18" />
+        <path d="M3 12h18" />
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+      </symbol>
+      <symbol id="play" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z" />
+      </symbol>
+      <symbol id="shield" viewBox="0 0 24 24">
+        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+        <path d="m9 12 2 2 4-4" />
+      </symbol>
+      <symbol id="chart" viewBox="0 0 24 24">
+        <path d="M5 21v-6" />
+        <path d="M12 21V3" />
+        <path d="M19 21V9" />
+      </symbol>
+      <symbol id="chevron-left" viewBox="0 0 24 24">
+        <path d="m15 18-6-6 6-6" />
+      </symbol>
+      <symbol id="chevron-right" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
     </svg>
 
     <header class="site-header" data-header>
@@ -42,7 +131,7 @@
           <a href="#whitepaper">白皮书</a>
         </nav>
 
-        <a class="btn btn-primary nav-cta" href="#demo" data-demo-open>预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+        <a class="btn btn-primary nav-cta" href="#demo" data-demo-open>预约演示<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
       </div>
     </header>
 
@@ -56,8 +145,8 @@
               让工程管理从人工经验驱动升级为数据智能驱动。
             </p>
             <div class="actions">
-              <a class="btn btn-primary" href="#demo" data-demo-open>预约演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
-              <a class="btn btn-secondary" href="#agents">查看更多 Agent 架构<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a class="btn btn-primary" href="#demo" data-demo-open>预约演示<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
+              <a class="btn btn-secondary" href="#agents">查看更多 Agent 架构<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
             </div>
           </div>
 
@@ -88,11 +177,11 @@
             <div class="visual-placeholder"><span>hero-brain-poster.png</span></div>
             <div class="orbit orbit-one"></div>
             <div class="orbit orbit-two"></div>
-            <div class="agent-tag tag-procurement"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#shopping-cart"></use></svg>智慧采购 Agent</div>
-            <div class="agent-tag tag-bim"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#box"></use></svg>BIM 预测 Agent</div>
-            <div class="agent-tag tag-weighing"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#scale"></use></svg>过磅防作弊 Agent</div>
-            <div class="agent-tag tag-finance"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#yen"></use></svg>智能财务 Agent</div>
-            <div class="agent-tag tag-wechat"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg>企业微信协同 Agent</div>
+            <div class="agent-tag tag-procurement"><svg class="line-icon" aria-hidden="true"><use href="#shopping-cart"></use></svg>智慧采购 Agent</div>
+            <div class="agent-tag tag-bim"><svg class="line-icon" aria-hidden="true"><use href="#box"></use></svg>BIM 预测 Agent</div>
+            <div class="agent-tag tag-weighing"><svg class="line-icon" aria-hidden="true"><use href="#scale"></use></svg>过磅防作弊 Agent</div>
+            <div class="agent-tag tag-finance"><svg class="line-icon" aria-hidden="true"><use href="#yen"></use></svg>智能财务 Agent</div>
+            <div class="agent-tag tag-wechat"><svg class="line-icon" aria-hidden="true"><use href="#messages"></use></svg>企业微信协同 Agent</div>
           </div>
         </div>
       </section>
@@ -107,7 +196,7 @@
                 <p>供需深度偏差全链路响应，项目关键节点提前 62 天锁定风险。</p>
               </div>
               <div class="asset-frame mini-asset" data-asset-label="采购响应图">
-                <img src="assets/images/metric-procurement.webp" data-fallback="assets/images/metric-procurement.png" alt="采购响应效率提升" decoding="async" />
+                <img src="assets/images/metric-procurement.webp" data-fallback="assets/images/metric-procurement.png" alt="采购响应效率提升" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>metric</span></div>
               </div>
             </article>
@@ -118,7 +207,7 @@
                 <p>智能比价与供应链推荐，真实项目成本显著下降。</p>
               </div>
               <div class="asset-frame mini-asset" data-asset-label="成本降低图">
-                <img src="assets/images/metric-cost.webp" data-fallback="assets/images/metric-cost.png" alt="成本降低" decoding="async" />
+                <img src="assets/images/metric-cost.webp" data-fallback="assets/images/metric-cost.png" alt="成本降低" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>metric</span></div>
               </div>
             </article>
@@ -129,7 +218,7 @@
                 <p>把月度核算升级为日级结算，利项风险提前暴露。</p>
               </div>
               <div class="asset-frame mini-asset" data-asset-label="核算周期图">
-                <img src="assets/images/metric-cycle.webp" data-fallback="assets/images/metric-cycle.png" alt="核算周期缩短" decoding="async" />
+                <img src="assets/images/metric-cycle.webp" data-fallback="assets/images/metric-cycle.png" alt="核算周期缩短" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>metric</span></div>
               </div>
             </article>
@@ -140,7 +229,7 @@
                 <p>材料计划准确率提升，减少停工待料与库存积压。</p>
               </div>
               <div class="asset-frame mini-asset" data-asset-label="BIM 预测图">
-                <img src="assets/images/metric-bim.webp" data-fallback="assets/images/metric-bim.png" alt="BIM 预测" decoding="async" />
+                <img src="assets/images/metric-bim.webp" data-fallback="assets/images/metric-bim.png" alt="BIM 预测" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>metric</span></div>
               </div>
             </article>
@@ -159,7 +248,7 @@
               </div>
               <picture class="pain-scene">
                 <source srcset="assets/images/pain-scenes/pain-progress-scene.webp" type="image/webp" />
-                <img src="assets/images/pain-scenes/pain-progress-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img src="assets/images/pain-scenes/pain-progress-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" loading="lazy" />
               </picture>
             </article>
             <article class="pain-card">
@@ -171,7 +260,7 @@
               </div>
               <picture class="pain-scene">
                 <source srcset="assets/images/pain-scenes/pain-materials-scene.webp" type="image/webp" />
-                <img src="assets/images/pain-scenes/pain-materials-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img src="assets/images/pain-scenes/pain-materials-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" loading="lazy" />
               </picture>
             </article>
             <article class="pain-card">
@@ -183,7 +272,7 @@
               </div>
               <picture class="pain-scene">
                 <source srcset="assets/images/pain-scenes/pain-cost-scene.webp" type="image/webp" />
-                <img src="assets/images/pain-scenes/pain-cost-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img src="assets/images/pain-scenes/pain-cost-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" loading="lazy" />
               </picture>
             </article>
             <article class="pain-card">
@@ -195,7 +284,7 @@
               </div>
               <picture class="pain-scene">
                 <source srcset="assets/images/pain-scenes/pain-collaboration-scene.webp" type="image/webp" />
-                <img src="assets/images/pain-scenes/pain-collaboration-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img src="assets/images/pain-scenes/pain-collaboration-scene.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" loading="lazy" />
               </picture>
             </article>
           </div>
@@ -236,46 +325,46 @@
               <span class="agent-connector connector-finance" aria-hidden="true"></span>
               <span class="agent-connector connector-wechat" aria-hidden="true"></span>
               <div class="agent-matrix" aria-label="业务 Agent">
-                <div class="agent-tag arch-top"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#shopping-cart"></use></svg>智慧采购 Agent</div>
-                <div class="agent-tag arch-left"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#scale"></use></svg>过磅防作弊 Agent</div>
-                <div class="agent-tag arch-right"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#box"></use></svg>BIM 预测 Agent</div>
-                <div class="agent-tag arch-bottom"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#chart"></use></svg>经营决策 Agent</div>
-                <div class="agent-tag arch-finance"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#yen"></use></svg>智能财务 Agent</div>
-                <div class="agent-tag arch-wechat"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg>企业微信协同 Agent</div>
+                <div class="agent-tag arch-top"><svg class="line-icon" aria-hidden="true"><use href="#shopping-cart"></use></svg>智慧采购 Agent</div>
+                <div class="agent-tag arch-left"><svg class="line-icon" aria-hidden="true"><use href="#scale"></use></svg>过磅防作弊 Agent</div>
+                <div class="agent-tag arch-right"><svg class="line-icon" aria-hidden="true"><use href="#box"></use></svg>BIM 预测 Agent</div>
+                <div class="agent-tag arch-bottom"><svg class="line-icon" aria-hidden="true"><use href="#chart"></use></svg>经营决策 Agent</div>
+                <div class="agent-tag arch-finance"><svg class="line-icon" aria-hidden="true"><use href="#yen"></use></svg>智能财务 Agent</div>
+                <div class="agent-tag arch-wechat"><svg class="line-icon" aria-hidden="true"><use href="#messages"></use></svg>企业微信协同 Agent</div>
               </div>
             </div>
 
             <div class="layer-list">
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-data-matrix.webp" data-fallback="assets/images/layer-data-matrix.png" alt="" aria-hidden="true" decoding="async" />
+                <img class="layer-icon" src="assets/images/layer-data-matrix.webp" data-fallback="assets/images/layer-data-matrix.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
                 <div>
                   <h3>数据矩阵层</h3>
                   <p>项目、合同、材料、设备、财务与职能数据统一治理。</p>
                 </div>
               </article>
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-intelligence-analysis.webp" data-fallback="assets/images/layer-intelligence-analysis.png" alt="" aria-hidden="true" decoding="async" />
+                <img class="layer-icon" src="assets/images/layer-intelligence-analysis.webp" data-fallback="assets/images/layer-intelligence-analysis.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
                 <div>
                   <h3>智能分析层</h3>
                   <p>需求识别、趋势预测、成本预警和风险评分构建闭环。</p>
                 </div>
               </article>
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-agent-orchestration.webp" data-fallback="assets/images/layer-agent-orchestration.png" alt="" aria-hidden="true" decoding="async" />
+                <img class="layer-icon" src="assets/images/layer-agent-orchestration.webp" data-fallback="assets/images/layer-agent-orchestration.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
                 <div>
                   <h3>Agent 编排层</h3>
                   <p>按需分配、调用能力，分派最合适的 Agent 执行任务。</p>
                 </div>
               </article>
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-business-execution.webp" data-fallback="assets/images/layer-business-execution.png" alt="" aria-hidden="true" decoding="async" />
+                <img class="layer-icon" src="assets/images/layer-business-execution.webp" data-fallback="assets/images/layer-business-execution.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
                 <div>
                   <h3>业务执行层</h3>
                   <p>采购、财务、过磅、BIM、协同流程一体化闭环。</p>
                 </div>
               </article>
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-audit-control.webp" data-fallback="assets/images/layer-audit-control.png" alt="" aria-hidden="true" decoding="async" />
+                <img class="layer-icon" src="assets/images/layer-audit-control.webp" data-fallback="assets/images/layer-audit-control.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
                 <div>
                   <h3>审计管控层</h3>
                   <p>全链路可追溯、实时合规，覆盖与经营管理升级。</p>
@@ -295,7 +384,7 @@
             <article class="module-card">
               <h3>智慧采购</h3>
               <div class="asset-frame module-asset" data-asset-label="智慧采购">
-                <img src="assets/images/module-procurement.webp" data-fallback="assets/images/module-procurement.png" alt="智慧采购" decoding="async" />
+                <img src="assets/images/module-procurement.webp" data-fallback="assets/images/module-procurement.png" alt="智慧采购" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>module-procurement.png</span></div>
               </div>
               <ul>
@@ -303,12 +392,12 @@
                 <li>智能比价与供应商推荐</li>
                 <li>在线询比价与合同管理</li>
               </ul>
-              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
             </article>
             <article class="module-card">
               <h3>过磅防作弊</h3>
               <div class="asset-frame module-asset" data-asset-label="过磅防作弊">
-                <img src="assets/images/module-weighing.webp" data-fallback="assets/images/module-weighing.png" alt="过磅防作弊" decoding="async" />
+                <img src="assets/images/module-weighing.webp" data-fallback="assets/images/module-weighing.png" alt="过磅防作弊" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>module-weighing.png</span></div>
               </div>
               <ul>
@@ -316,12 +405,12 @@
                 <li>车牌识别与磅差联动</li>
                 <li>数据留痕与过程固化</li>
               </ul>
-              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
             </article>
             <article class="module-card">
               <h3>智能财务</h3>
               <div class="asset-frame module-asset" data-asset-label="智能财务">
-                <img src="assets/images/module-finance.webp" data-fallback="assets/images/module-finance.png" alt="智能财务" decoding="async" />
+                <img src="assets/images/module-finance.webp" data-fallback="assets/images/module-finance.png" alt="智能财务" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>module-finance.png</span></div>
               </div>
               <ul>
@@ -329,12 +418,12 @@
                 <li>成本分摊与预算监控</li>
                 <li>利润风险预警与分析</li>
               </ul>
-              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
             </article>
             <article class="module-card">
               <h3>企业微信 AI Agent</h3>
               <div class="asset-frame module-asset" data-asset-label="企业微信 AI Agent">
-                <img src="assets/images/module-wechat-agent.webp" data-fallback="assets/images/module-wechat-agent.png" alt="企业微信 AI Agent" decoding="async" />
+                <img src="assets/images/module-wechat-agent.webp" data-fallback="assets/images/module-wechat-agent.png" alt="企业微信 AI Agent" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>module-wechat-agent.png</span></div>
               </div>
               <ul>
@@ -342,12 +431,12 @@
                 <li>项目群智能问答</li>
                 <li>移动协同与反馈闭环</li>
               </ul>
-              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
             </article>
             <article class="module-card">
               <h3>BIM 预测材料需求</h3>
               <div class="asset-frame module-asset" data-asset-label="BIM 预测">
-                <img src="assets/images/module-bim-cube.webp" data-fallback="assets/images/module-bim-cube.png" alt="BIM 预测材料需求" decoding="async" />
+                <img src="assets/images/module-bim-cube.webp" data-fallback="assets/images/module-bim-cube.png" alt="BIM 预测材料需求" decoding="async" loading="lazy" />
                 <div class="visual-placeholder"><span>module-bim-cube.png</span></div>
               </div>
               <ul>
@@ -355,7 +444,7 @@
                 <li>材料计划与需用联动</li>
                 <li>缺料预警与替代方案推荐</li>
               </ul>
-              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+              <a href="#demo">了解更多<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
             </article>
           </div>
         </div>
@@ -367,8 +456,8 @@
           <div class="case-list">
             <div class="case-card">
               <div class="asset-frame case-image" data-asset-label="案例楼盘图">
-                <img src="assets/images/case-city.webp" data-fallback="assets/images/case-city.png" alt="湖州织东控规单元项目" decoding="async" />
-                <div class="visual-placeholder"><span>case-city.png</span></div>
+                <img src="assets/images/case-city.webp" data-fallback="assets/images/case-city.jpg" alt="湖州织东控规单元项目" decoding="async" loading="lazy" />
+                <div class="visual-placeholder"><span>case-city.jpg</span></div>
               </div>
               <div class="case-content">
                 <div class="case-heading">
@@ -416,7 +505,7 @@
                   <span class="bookmark" aria-hidden="true"></span>
                   <div class="paper-body">
                     <div class="asset-frame paper-preview" data-asset-label="多 Agent 架构指南">
-                      <img src="assets/images/whitepaper-agent-orchestrator.webp" data-fallback="assets/images/whitepaper-agent-orchestrator.jpg" alt="多 Agent 架构指南预览" decoding="async" />
+                      <img src="assets/images/whitepaper-agent-orchestrator.webp" data-fallback="assets/images/whitepaper-agent-orchestrator.jpg" alt="多 Agent 架构指南预览" decoding="async" loading="lazy" />
                       <div class="visual-placeholder"><span>whitepaper-agent-orchestrator.jpg</span></div>
                     </div>
                     <div class="paper-copy">
@@ -433,7 +522,7 @@
                   <span class="bookmark" aria-hidden="true"></span>
                   <div class="paper-body">
                     <div class="asset-frame paper-preview" data-asset-label="采购闭环">
-                      <img src="assets/images/whitepaper-procurement-loop.webp" data-fallback="assets/images/whitepaper-procurement-loop.jpg" alt="智慧采购与过磅闭环预览" decoding="async" />
+                      <img src="assets/images/whitepaper-procurement-loop.webp" data-fallback="assets/images/whitepaper-procurement-loop.jpg" alt="智慧采购与过磅闭环预览" decoding="async" loading="lazy" />
                       <div class="visual-placeholder"><span>whitepaper-procurement-loop.jpg</span></div>
                     </div>
                     <div class="paper-copy">
@@ -450,7 +539,7 @@
                   <span class="bookmark" aria-hidden="true"></span>
                   <div class="paper-body">
                     <div class="asset-frame paper-preview" data-asset-label="成本预测">
-                      <img src="assets/images/whitepaper-cost-forecast.webp" data-fallback="assets/images/whitepaper-cost-forecast.jpg" alt="项目成本预测实践预览" decoding="async" />
+                      <img src="assets/images/whitepaper-cost-forecast.webp" data-fallback="assets/images/whitepaper-cost-forecast.jpg" alt="项目成本预测实践预览" decoding="async" loading="lazy" />
                       <div class="visual-placeholder"><span>whitepaper-cost-forecast.jpg</span></div>
                     </div>
                     <div class="paper-copy">
@@ -476,12 +565,12 @@
               <h2 id="demo-title">让你的项目进入<span class="title-accent">智能管理</span>时代</h2>
               <p>盈泰 AI 建工管理矩阵 OS，助力企业降本增效，赢在未来。</p>
               <div class="actions">
-                <button class="btn btn-primary" type="button" data-demo-open>预约产品演示<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></button>
-                <a class="btn btn-secondary" href="mailto:service@pmagic.ai">获取解决方案<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+                <button class="btn btn-primary" type="button" data-demo-open>预约产品演示<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
+                <a class="btn btn-secondary" href="mailto:service@pmagic.ai">获取解决方案<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></a>
               </div>
             </div>
             <div class="asset-frame city-asset" data-asset-label="底部城市光效">
-              <img src="assets/images/cta-management-dashboard.webp" data-fallback="assets/images/cta-management-dashboard.png" alt="智能管理时代项目管理界面" decoding="async" />
+              <img src="assets/images/cta-management-dashboard.webp" data-fallback="assets/images/cta-management-dashboard.png" alt="智能管理时代项目管理界面" decoding="async" loading="lazy" />
               <div class="visual-placeholder"><span>cta-management-dashboard.png</span></div>
             </div>
           </div>
@@ -497,9 +586,9 @@
           </a>
           <p>盈泰 AI 建工管理矩阵 OS，以多 Agent 协同驱动企业管理从经验走向智能。</p>
           <div class="socials" aria-label="社交链接">
-            <a href="#" aria-label="微信"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#messages"></use></svg></a>
-            <a href="#" aria-label="社区"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#users"></use></svg></a>
-            <a href="#" aria-label="视频"><svg class="line-icon" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#play"></use></svg></a>
+            <a href="#" aria-label="微信"><svg class="line-icon" aria-hidden="true"><use href="#messages"></use></svg></a>
+            <a href="#" aria-label="社区"><svg class="line-icon" aria-hidden="true"><use href="#users"></use></svg></a>
+            <a href="#" aria-label="视频"><svg class="line-icon" aria-hidden="true"><use href="#play"></use></svg></a>
           </div>
           <small>© 2026 Pmagic AI. All rights reserved.</small>
         </div>
@@ -578,7 +667,7 @@
             <span>联系方式</span>
             <input type="text" name="contact" autocomplete="tel" required placeholder="手机号 / 微信 / 邮箱">
           </label>
-          <button class="btn btn-primary" type="submit">提交预约<svg class="icon-arrow" aria-hidden="true"><use href="assets/icons/lucide-sprite.svg#arrow-right"></use></svg></button>
+          <button class="btn btn-primary" type="submit">提交预约<svg class="icon-arrow" aria-hidden="true"><use href="#arrow-right"></use></svg></button>
           <p class="demo-form__status" data-demo-status role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -603,6 +692,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=20260701-pdfjs-preview"></script>
+    <script src="script.js?v=20260702-pdf-lin"></script>
   </body>
 </html>

@@ -352,16 +352,16 @@ function renderCaseCard(item, index) {
     .join("");
 
   return `
-    <div
+    <article
       class="case-card${index === 0 ? " is-active" : ""}"
-      id="case-panel-${index}"
-      role="tabpanel"
-      aria-labelledby="case-tab-${index}"
-      data-case-panel="${index}"
-      ${index === 0 ? "" : "hidden"}
+      data-case-slide="${index}"
+      role="group"
+      aria-roledescription="幻灯片"
+      aria-label="${escapeHtml(item.title)}"
+      ${index === 0 ? "" : 'aria-hidden="true"'}
     >
       <div class="asset-frame case-image" data-asset-label="案例图片">
-        <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(imageAlt)}" decoding="async" />
+        <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(imageAlt)}" decoding="async" loading="lazy" />
         <div class="visual-placeholder"><span>${escapeHtml(imageAlt)}</span></div>
       </div>
       <div class="case-content">
@@ -373,73 +373,176 @@ function renderCaseCard(item, index) {
         <div class="case-stats">${metrics}</div>
         <ol class="timeline">${timeline}</ol>
       </div>
+    </article>
+  `;
+}
+
+function renderCaseControls(cases) {
+  if (cases.length < 2) return "";
+
+  const dots = cases
+    .map(
+      (item, index) => `
+        <button
+          class="case-dot${index === 0 ? " is-active" : ""}"
+          type="button"
+          role="tab"
+          aria-label="${escapeHtml(item.title)}"
+          aria-selected="${index === 0 ? "true" : "false"}"
+          data-case-dot="${index}"
+        ></button>
+      `
+    )
+    .join("");
+
+  return `
+    <div class="case-controls">
+      <button class="case-arrow case-arrow--prev" type="button" data-case-prev aria-label="上一个案例">
+        <svg class="icon-chevron" aria-hidden="true"><use href="#chevron-left"></use></svg>
+      </button>
+      <div class="case-dots" role="tablist" aria-label="项目案例切换">${dots}</div>
+      <button class="case-arrow case-arrow--next" type="button" data-case-next aria-label="下一个案例">
+        <svg class="icon-chevron" aria-hidden="true"><use href="#chevron-right"></use></svg>
+      </button>
     </div>
   `;
 }
 
-function renderCaseSwitch(cases) {
-  if (cases.length < 2) return "";
+function setupCaseCarousel(section) {
+  const carousel = section.querySelector("[data-case-carousel]");
+  const track = section.querySelector("[data-case-track]");
+  const viewport = section.querySelector("[data-case-viewport]");
+  if (!carousel || !track || !viewport) return;
 
-  const tabs = cases
-    .map((item, index) => {
-      return `
-        <button
-          class="case-tab${index === 0 ? " is-active" : ""}"
-          type="button"
-          role="tab"
-          id="case-tab-${index}"
-          aria-selected="${index === 0 ? "true" : "false"}"
-          aria-controls="case-panel-${index}"
-          data-case-tab="${index}"
-        >
-          <span class="case-tab__title">${escapeHtml(item.title)}</span>
-        </button>
-      `;
-    })
-    .join("");
+  const slides = Array.from(track.querySelectorAll("[data-case-slide]"));
+  const dots = Array.from(carousel.querySelectorAll("[data-case-dot]"));
+  const prevBtn = carousel.querySelector("[data-case-prev]");
+  const nextBtn = carousel.querySelector("[data-case-next]");
+  if (slides.length < 2) return;
 
-  return `<div class="case-switch" role="tablist" aria-label="项目案例切换"><div class="case-switch__track">${tabs}</div></div>`;
-}
+  const AUTOPLAY_MS = 6000;
+  const canAutoplay = !prefersReducedMotion;
+  let index = 0;
+  let autoTimer = null;
 
-function setupCaseSwitching(section) {
-  const tabs = Array.from(section.querySelectorAll("[data-case-tab]"));
-  const panels = Array.from(section.querySelectorAll("[data-case-panel]"));
-  if (tabs.length < 2 || panels.length < 2) return;
-
-  const setActiveCase = (activeIndex) => {
-    tabs.forEach((tab) => {
-      const index = Number(tab.dataset.caseTab);
-      const isActive = index === activeIndex;
-      tab.classList.toggle("is-active", isActive);
-      tab.setAttribute("aria-selected", String(isActive));
+  const applyState = () => {
+    track.style.transform = `translateX(-${index * 100}%)`;
+    slides.forEach((slide, i) => {
+      const isActive = i === index;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
     });
-
-    panels.forEach((panel) => {
-      const index = Number(panel.dataset.casePanel);
-      const isActive = index === activeIndex;
-      panel.classList.toggle("is-active", isActive);
-      panel.hidden = !isActive;
+    dots.forEach((dot, i) => {
+      const isActive = i === index;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-selected", String(isActive));
     });
   };
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => setActiveCase(Number(tab.dataset.caseTab)));
-    tab.addEventListener("keydown", (event) => {
-      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  let interactionPaused = false;
+  let inView = true;
+
+  const stopAutoplay = () => {
+    if (autoTimer) {
+      window.clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  };
+  const startAutoplay = () => {
+    // 仅在：允许自动播放、未在计时、页面可见、未被交互暂停、且轮播在视口内时才启动。
+    if (!canAutoplay || autoTimer || document.hidden || interactionPaused || !inView) return;
+    autoTimer = window.setInterval(() => {
+      index = (index + 1) % slides.length;
+      applyState();
+    }, AUTOPLAY_MS);
+  };
+  const goTo = (nextIndex) => {
+    index = (nextIndex + slides.length) % slides.length;
+    applyState();
+    // 手动切换后重置计时（若正被悬停/聚焦暂停，startAutoplay 会自动保持暂停）。
+    stopAutoplay();
+    startAutoplay();
+  };
+  const pauseForInteraction = () => {
+    interactionPaused = true;
+    stopAutoplay();
+  };
+  const resumeAfterInteraction = () => {
+    interactionPaused = false;
+    startAutoplay();
+  };
+
+  prevBtn?.addEventListener("click", () => goTo(index - 1));
+  nextBtn?.addEventListener("click", () => goTo(index + 1));
+  dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.caseDot))));
+
+  carousel.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") {
       event.preventDefault();
-      const currentIndex = Number(tab.dataset.caseTab);
-      const nextIndex =
-        event.key === "Home"
-          ? 0
-          : event.key === "End"
-            ? tabs.length - 1
-            : event.key === "ArrowRight"
-              ? (currentIndex + 1) % tabs.length
-              : (currentIndex - 1 + tabs.length) % tabs.length;
-      setActiveCase(nextIndex);
-      tabs[nextIndex]?.focus();
-    });
+      goTo(index - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goTo(index + 1);
+    }
   });
+
+  // 悬停 / 聚焦时暂停自动播放，离开后恢复。
+  carousel.addEventListener("pointerenter", pauseForInteraction);
+  carousel.addEventListener("pointerleave", resumeAfterInteraction);
+  carousel.addEventListener("focusin", pauseForInteraction);
+  carousel.addEventListener("focusout", resumeAfterInteraction);
+
+  // 切后台时暂停，回到前台恢复。
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopAutoplay();
+    else startAutoplay();
+  });
+
+  // 仅在轮播进入视口时自动播放。
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (inView) startAutoplay();
+          else stopAutoplay();
+        });
+      },
+      { threshold: 0.25 }
+    );
+    observer.observe(carousel);
+  }
+
+  // 触摸 / 指针滑动切换；在可横向滚动的时间线上不触发，避免冲突。
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+  let swiping = false;
+  viewport.addEventListener("pointerdown", (event) => {
+    if (event.target instanceof Element && event.target.closest(".timeline")) return;
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    swiping = true;
+    stopAutoplay();
+  });
+  const endSwipe = (event) => {
+    if (!swiping) return;
+    swiping = false;
+    const dx = event.clientX - pointerStartX;
+    const dy = event.clientY - pointerStartY;
+    if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy)) {
+      goTo(index + (dx < 0 ? 1 : -1));
+    } else {
+      startAutoplay();
+    }
+  };
+  viewport.addEventListener("pointerup", endSwipe);
+  viewport.addEventListener("pointercancel", () => {
+    swiping = false;
+    startAutoplay();
+  });
+
+  applyState();
+  startAutoplay();
 }
 
 function renderCaseSection(caseSection) {
@@ -450,22 +553,27 @@ function renderCaseSection(caseSection) {
   if (!section || !title || !container || !cases.length) return;
 
   title.textContent = caseSection.title || title.textContent;
-  const switcher = renderCaseSwitch(cases);
   const cards = cases.map(renderCaseCard).join("");
+  const controls = renderCaseControls(cases);
 
   container.querySelector(".case-switch")?.remove();
+  container.querySelector(".case-carousel")?.remove();
   container.querySelector(".case-list")?.remove();
   container.querySelector(".case-card")?.remove();
   container.insertAdjacentHTML(
     "beforeend",
     `
-      ${switcher}
-      <div class="case-list">${cards}</div>
+      <div class="case-carousel${cases.length > 1 ? "" : " is-single"}" data-case-carousel>
+        <div class="case-viewport" data-case-viewport>
+          <div class="case-track" data-case-track>${cards}</div>
+        </div>
+        ${controls}
+      </div>
     `
   );
 
   setupAssetFrames(section);
-  setupCaseSwitching(section);
+  setupCaseCarousel(section);
 }
 
 function renderWhitepaperSection(whitepaperSection) {
@@ -488,7 +596,7 @@ function renderWhitepaperSection(whitepaperSection) {
           <span class="bookmark" aria-hidden="true"></span>
           <div class="paper-body">
             <div class="asset-frame paper-preview" data-asset-label="${escapeHtml(paper.title)}">
-              <img src="${escapeHtml(previewUrl)}" alt="${escapeHtml(paper.title)}预览" decoding="async" />
+              <img src="${escapeHtml(previewUrl)}" alt="${escapeHtml(paper.title)}预览" decoding="async" loading="lazy" />
               <div class="visual-placeholder"><span>${escapeHtml(paper.title)}</span></div>
             </div>
             <div class="paper-copy">
@@ -609,6 +717,42 @@ function clearPdfPreview() {
   setPdfStatus("");
 }
 
+// 预取 pdf.js：白皮书区块进入视口时，用 rel=prefetch 低优先级提前把预览库和 worker 拉进缓存，
+// 用户点“在线浏览”时无需再现下约 1.4MB，预览可近乎秒开。只做一次、不阻塞渲染、不执行脚本。
+let pdfPrefetchDone = false;
+function prefetchPdfJs() {
+  if (pdfPrefetchDone) return;
+  pdfPrefetchDone = true;
+  ["assets/vendor/pdfjs/pdf.min.js", "assets/vendor/pdfjs/pdf.worker.min.js"].forEach((href) => {
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "script";
+    link.href = href;
+    document.head.appendChild(link);
+  });
+}
+
+function setupPdfPrefetch() {
+  const section = document.querySelector("#whitepaper");
+  if (!section) return;
+  if (!("IntersectionObserver" in window)) {
+    if ("requestIdleCallback" in window) window.requestIdleCallback(prefetchPdfJs);
+    else window.setTimeout(prefetchPdfJs, 2500);
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        prefetchPdfJs();
+        observer.disconnect();
+      });
+    },
+    { rootMargin: "500px 0px" }
+  );
+  observer.observe(section);
+}
+
 function ensurePdfJs() {
   if (window.pdfjsLib) {
     window.pdfjsLib.GlobalWorkerOptions.workerSrc = "assets/vendor/pdfjs/pdf.worker.min.js";
@@ -692,7 +836,15 @@ async function renderPdfPreview(pdfUrl) {
     const pdfjsLib = await ensurePdfJs();
     if (token !== pdfRenderToken) return;
 
-    pdfLoadingTask = pdfjsLib.getDocument({ url: pdfUrl });
+    // 大 PDF 提速：PDF 已做线性化（Fast Web View，首页数据在文件前部），配合流式渲染，
+    // pdf.js 下载到前部字节即可渲染首页——实测 600kbps 弱网下首页约 1 秒出现（整份 2.7MB 下完约需 36 秒）。
+    // disableAutoFetch 作为按需加载提示（pdf.js 3.11 的 fetch 传输仍可能在后台续传整份，但不阻塞首页显示）。
+    // 服务端已支持 Range（见 static.ts），为按需取页与断点续传打下基础。
+    pdfLoadingTask = pdfjsLib.getDocument({
+      url: pdfUrl,
+      rangeChunkSize: 65536,
+      disableAutoFetch: true
+    });
     pdfDocument = await pdfLoadingTask.promise;
     if (token !== pdfRenderToken) return;
 
@@ -857,7 +1009,6 @@ document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
     media?.classList.remove("is-static-loop");
   };
   const markVideoUnavailable = () => {
-    video.pause();
     media?.classList.remove("is-video-ready");
     media?.classList.add("is-video-unavailable");
   };
@@ -875,27 +1026,66 @@ document.querySelectorAll("[data-autoplay-video]").forEach((video) => {
   const syncFallbackClass = () => {
     video.classList.toggle("is-fallback-video", /\.mp4(?:$|\?)/.test(video.currentSrc));
   };
-  const playMutedVideo = () => {
-    if (prefersStaticHeroMedia) {
-      markStaticLoop();
-      return;
-    }
-    if (document.visibilityState !== "visible") return;
+
+  // 移动端 / 减少动态偏好：不加载视频，直接用静态海报（省流量并规避自动播放限制）。
+  if (prefersStaticHeroMedia) {
+    markStaticLoop();
+    return;
+  }
+
+  let sourcesReady = false;
+  const ensureSources = () => {
+    if (sourcesReady) return;
+    sourcesReady = true;
     video.preload = "metadata";
     video.querySelectorAll("source[data-src]").forEach((source) => {
       source.setAttribute("src", source.dataset.src);
     });
     video.load();
-    video.play().then(markVideoReady).catch(markVideoUnavailable);
+  };
+
+  // 关键修复："放一会就不动了"的根因是原代码把任何 pause（滚动离开视口、切后台被
+  // 系统暂停）都当成失败并永久隐藏视频，且没有恢复机制。改为：只有真正播放失败/解码
+  // 出错才回退到海报；滚动/切后台造成的暂停属于正常状态，回到视口后自动继续播放。
+  let inView = true;
+  const tryPlay = () => {
+    if (document.visibilityState !== "visible" || !inView) return;
+    ensureSources();
+    const attempt = video.play();
+    if (attempt && typeof attempt.catch === "function") {
+      attempt.then(markVideoReady).catch(markVideoUnavailable);
+    }
   };
 
   video.addEventListener("loadedmetadata", syncFallbackClass);
   video.addEventListener("playing", markVideoReady);
-  video.addEventListener("pause", () => {
-    if (!video.ended) markVideoUnavailable();
-  });
   video.addEventListener("error", markVideoUnavailable);
-  document.addEventListener("visibilitychange", playMutedVideo);
+
+  // 进入视口播放、离开视口暂停：既省电，又避免被浏览器后台策略强停后无法恢复。
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (inView) {
+            tryPlay();
+          } else if (!video.paused) {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(media || video);
+  }
+
+  // 切回前台且仍在视口内时恢复播放。
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") tryPlay();
+  });
+
   syncFallbackClass();
-  playMutedVideo();
+  tryPlay();
 });
+
+setupPdfPrefetch();

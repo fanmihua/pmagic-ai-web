@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { pipeline } from "node:stream/promises";
 import argon2 from "argon2";
+import compress from "@fastify/compress";
 import cookie from "@fastify/cookie";
 import multipart from "@fastify/multipart";
 import Fastify from "fastify";
@@ -165,6 +166,15 @@ async function upsertWhitepaper(id: string | null, payload: z.infer<typeof white
 }
 
 const app = Fastify({ logger: true });
+
+// gzip/brotli 压缩：pdf.js 库（约 1.37MB JS）、CSS/JS/HTML/JSON 等文本资源压缩后约为原体积的 1/3，
+// 明显加快自建部署下的首屏与 PDF 预览加载。已压缩类型（PDF、图片、视频）由 mime 可压缩性自动跳过。
+// 必须在路由定义之前注册，onSend 钩子才能作用到全部路由。
+await app.register(compress, {
+  global: true,
+  threshold: 1024,
+  encodings: ["br", "gzip", "deflate"]
+});
 
 await fs.mkdir(paths.uploadDir, { recursive: true });
 await app.register(cookie);

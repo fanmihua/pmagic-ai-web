@@ -13,3 +13,4 @@ public/
 .local-secrets/
 *.tsbuildinfo
 .env*.local
+*.env
