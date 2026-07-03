@@ -1,0 +1,17 @@
+{
+  "name": "pmagic-ai-web",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "admin",
+    "server"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace admin && npm run prisma:generate --workspace server && npm run build --workspace server && node scripts/prepare-vercel.mjs",
+    "vercel-build": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "typescript": "^5.8.3"
+  }
+}
