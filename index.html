@@ -9,7 +9,7 @@
     />
     <title>盈泰 AI 建工管理矩阵 OS</title>
     <link rel="icon" href="assets/images/pmagic-logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=20260702-pdf-lin" />
+    <link rel="stylesheet" href="styles.css?v=20260705-agent-visual" />
   </head>
   <body>
     <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
@@ -80,9 +80,24 @@
         <path d="M3 5V19A9 3 0 0 0 21 19V5" />
         <path d="M3 12A9 3 0 0 0 21 12" />
       </symbol>
+      <symbol id="database-zap" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5V19A9 3 0 0 0 15 21.84" />
+        <path d="M21 5V8" />
+        <path d="M21 12L18 17H22L19 22" />
+        <path d="M3 12A9 3 0 0 0 14.59 14.87" />
+      </symbol>
       <symbol id="trend" viewBox="0 0 24 24">
         <path d="M16 7h6v6" />
         <path d="m22 7-8.5 8.5-5-5L2 17" />
+      </symbol>
+      <symbol id="chart-no-axes-combined" viewBox="0 0 24 24">
+        <path d="M12 16v5" />
+        <path d="M16 14.639V21" />
+        <path d="M20 10.656V21" />
+        <path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" />
+        <path d="M4 18.463V21" />
+        <path d="M8 14.656V21" />
       </symbol>
       <symbol id="blocks" viewBox="0 0 24 24">
         <path d="M12 3v18" />
@@ -301,13 +316,13 @@
               <picture class="architecture-core-visual">
                 <source
                   type="image/webp"
-                  srcset="assets/images/agent-hub/architecture-agent-ai-360.webp 360w, assets/images/agent-hub/architecture-agent-ai-480.webp 480w, assets/images/agent-hub/architecture-agent-ai.webp 640w, assets/images/agent-hub/architecture-agent-ai-960.webp 960w, assets/images/agent-hub/architecture-agent-ai-1254.webp 1254w"
+                  srcset="assets/images/agent-hub/architecture-agent-ai-360.webp?v=20260705-agent-visual 360w, assets/images/agent-hub/architecture-agent-ai-480.webp?v=20260705-agent-visual 480w, assets/images/agent-hub/architecture-agent-ai.webp?v=20260705-agent-visual 640w, assets/images/agent-hub/architecture-agent-ai-960.webp?v=20260705-agent-visual 960w, assets/images/agent-hub/architecture-agent-ai-1254.webp?v=20260705-agent-visual 1254w"
                   sizes="(max-width: 620px) calc(100vw - 28px), (max-width: 860px) 96vw, 560px"
                 />
                 <img
                   class="architecture-core-logo"
-                  src="assets/images/agent-hub/architecture-agent-ai-480.png"
-                  srcset="assets/images/agent-hub/architecture-agent-ai-360.png 360w, assets/images/agent-hub/architecture-agent-ai-480.png 480w, assets/images/agent-hub/architecture-agent-ai.png 640w, assets/images/agent-hub/architecture-agent-ai-960.png 960w, assets/images/agent-hub/architecture-agent-ai-1254.png 1254w"
+                  src="assets/images/agent-hub/architecture-agent-ai-480.png?v=20260705-agent-visual"
+                  srcset="assets/images/agent-hub/architecture-agent-ai-360.png?v=20260705-agent-visual 360w, assets/images/agent-hub/architecture-agent-ai-480.png?v=20260705-agent-visual 480w, assets/images/agent-hub/architecture-agent-ai.png?v=20260705-agent-visual 640w, assets/images/agent-hub/architecture-agent-ai-960.png?v=20260705-agent-visual 960w, assets/images/agent-hub/architecture-agent-ai-1254.png?v=20260705-agent-visual 1254w"
                   sizes="(max-width: 620px) calc(100vw - 28px), (max-width: 860px) 96vw, 560px"
                   alt="多业务 Agent 编排架构"
                   decoding="async"
@@ -336,14 +351,14 @@
 
             <div class="layer-list">
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-data-matrix.webp" data-fallback="assets/images/layer-data-matrix.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
+                <svg class="layer-icon layer-icon-svg" aria-hidden="true" focusable="false"><use href="#database-zap"></use></svg>
                 <div>
                   <h3>数据矩阵层</h3>
                   <p>项目、合同、材料、设备、财务与职能数据统一治理。</p>
                 </div>
               </article>
               <article class="layer-card">
-                <img class="layer-icon" src="assets/images/layer-intelligence-analysis.webp" data-fallback="assets/images/layer-intelligence-analysis.png" alt="" aria-hidden="true" decoding="async" loading="lazy" />
+                <svg class="layer-icon layer-icon-svg" aria-hidden="true" focusable="false"><use href="#chart-no-axes-combined"></use></svg>
                 <div>
                   <h3>智能分析层</h3>
                   <p>需求识别、趋势预测、成本预警和风险评分构建闭环。</p>
