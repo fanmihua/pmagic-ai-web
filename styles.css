@@ -1184,10 +1184,10 @@ main {
   display: none;
 }
 
-.arch-top { top: 21%; left: 28%; transform: translate(-50%, -50%); }
-.arch-left { top: 54%; left: 12%; transform: translate(-50%, -50%); }
+.arch-top { top: 21%; left: 24%; transform: translate(-50%, -50%); }
+.arch-left { top: 54%; left: 8%; transform: translate(-50%, -50%); }
 .arch-right { top: 54%; left: 88%; transform: translate(-50%, -50%); }
-.arch-finance { top: 86%; left: 29%; transform: translate(-50%, -50%); }
+.arch-finance { top: 86%; left: 25%; transform: translate(-50%, -50%); }
 .arch-bottom { top: 21%; left: 72%; transform: translate(-50%, -50%); }
 .arch-wechat { top: 86%; left: 72%; transform: translate(-50%, -50%); }
 
