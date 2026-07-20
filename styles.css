@@ -4556,3 +4556,411 @@ body.is-demo-modal-open {
     opacity: 0.94;
   }
 }
+
+/* 2026-07-20 工程大脑中枢：按五层智能架构目标稿重构 */
+.architecture-section {
+  padding: 18px 0 50px;
+  overflow: hidden;
+}
+
+.architecture-section .container {
+  width: min(var(--max), calc(100% - 56px));
+}
+
+.architecture-grid {
+  display: grid;
+  grid-template-columns: minmax(610px, 1.08fr) minmax(520px, 0.92fr);
+  align-items: start;
+  gap: 44px;
+}
+
+.architecture-overview {
+  min-width: 0;
+}
+
+.architecture-intro {
+  display: grid;
+  justify-items: start;
+}
+
+.architecture-eyebrow {
+  justify-self: center;
+  min-height: 46px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  background: var(--surface-medium);
+  box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.architecture-section .section-title {
+  margin: 16px 0 10px;
+  max-width: 640px;
+  color: var(--text);
+  text-align: left;
+  font-size: clamp(24px, 2.8vw, 36px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.architecture-intro > p {
+  margin: 0;
+  max-width: 610px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.62;
+}
+
+.architecture-visual {
+  min-height: 0;
+  margin-top: -2px;
+  padding: 0;
+  overflow: visible;
+}
+
+.architecture-visual > .architecture-hub-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(100%, 560px);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 34px rgba(96, 123, 255, 0.08));
+}
+
+.layer-list {
+  display: grid;
+  gap: 16px;
+  padding-top: 50px;
+}
+
+.layer-card {
+  position: relative;
+  min-height: 92px;
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 40px;
+  align-items: center;
+  gap: 18px;
+  overflow: hidden;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--soft-shadow);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  transition: translate 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.layer-card::before {
+  content: "";
+  position: absolute;
+  inset: 12px auto 12px 0;
+  width: 2px;
+  border-radius: 0 999px 999px 0;
+  background: linear-gradient(180deg, var(--cyan), var(--primary));
+  box-shadow: 0 0 12px rgba(96, 123, 255, 0.18);
+}
+
+.layer-card:hover {
+  translate: 0 -4px;
+  border-color: transparent;
+  box-shadow: 0 24px 56px rgba(96, 123, 255, 0.095), 0 8px 24px rgba(129, 111, 255, 0.055);
+}
+
+.layer-card.interactive-card::before {
+  inset: 12px auto 12px 0;
+  width: 2px;
+  padding: 0;
+  opacity: 1;
+  background: linear-gradient(180deg, var(--cyan), var(--primary));
+  -webkit-mask: none;
+  mask: none;
+  animation: none;
+  transition: opacity 180ms ease;
+}
+
+.layer-card.interactive-card::after {
+  inset: 0;
+  opacity: 0;
+  background: rgba(96, 123, 255, 0.1);
+  transition: opacity 220ms ease;
+}
+
+.layer-card.interactive-card:hover,
+.layer-card.interactive-card:focus-within,
+.layer-card.interactive-card.is-pointer-active {
+  border-color: transparent;
+}
+
+.layer-card.interactive-card:hover::before,
+.layer-card.interactive-card:focus-within::before,
+.layer-card.interactive-card.is-pointer-active::before {
+  opacity: 0;
+  animation: none;
+}
+
+.layer-card.interactive-card:hover::after,
+.layer-card.interactive-card:focus-within::after,
+.layer-card.interactive-card.is-pointer-active::after {
+  opacity: 1;
+}
+
+.layer-icon {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.layer-copy {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(144px, 0.9fr) minmax(180px, 1.1fr);
+  align-items: center;
+}
+
+.layer-card h3 {
+  margin: 0;
+  padding-right: 18px;
+  color: var(--primary);
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.layer-card p {
+  min-height: 42px;
+  padding-left: 24px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.62;
+  border-left: 1px solid var(--line);
+}
+
+.layer-number {
+  justify-self: end;
+  color: rgba(96, 123, 255, 0.1);
+  font-family: "DIN Alternate", "Bahnschrift", "Arial Narrow", sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.05em;
+}
+
+@media (min-width: 861px) and (max-width: 1180px) {
+  .architecture-section .container {
+    width: min(100% - 40px, var(--max));
+  }
+
+  .architecture-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .architecture-intro {
+    justify-items: center;
+  }
+
+  .architecture-section .section-title,
+  .architecture-intro > p {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .architecture-visual > .architecture-hub-image {
+    width: min(100%, 580px);
+  }
+
+  .layer-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-top: 0;
+  }
+
+  .layer-card,
+  .layer-card:last-child {
+    min-height: 112px;
+    padding: 18px;
+    grid-template-columns: 48px minmax(0, 1fr) 36px;
+    grid-column: auto;
+  }
+
+  .layer-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .layer-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .layer-copy {
+    display: block;
+  }
+
+  .layer-card h3 {
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .layer-card p {
+    min-height: 0;
+    margin-top: 8px;
+    padding: 0;
+    font-size: 14px;
+    border-left: 0;
+  }
+
+  .layer-number {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 860px) {
+  .architecture-section {
+    padding: 0 0 64px;
+  }
+
+  .architecture-section .container {
+    width: min(100% - 28px, 680px);
+  }
+
+  .architecture-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .architecture-intro {
+    justify-items: center;
+  }
+
+  .architecture-eyebrow {
+    min-height: 38px;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+
+  .architecture-section .section-title {
+    margin: 14px 0 10px;
+    padding: 0;
+    text-align: center;
+    font-size: clamp(24px, 7vw, 30px);
+    line-height: 1.25;
+  }
+
+  .architecture-intro > p {
+    margin: 0;
+    max-width: 560px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .architecture-visual {
+    margin: 0;
+  }
+
+  .architecture-visual > .architecture-hub-image {
+    width: min(100%, 480px);
+  }
+
+  .layer-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-top: 0;
+  }
+
+  .layer-card,
+  .layer-card:last-child {
+    min-height: 92px;
+    padding: 14px;
+    grid-template-columns: 54px minmax(0, 1fr) 30px;
+    gap: 12px;
+    grid-column: auto;
+    border-radius: var(--radius-md);
+  }
+
+  .layer-card::before {
+    inset-block: 12px;
+  }
+
+  .layer-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .layer-copy {
+    display: block;
+  }
+
+  .layer-card h3 {
+    padding: 0;
+    font-size: 14px;
+  }
+
+  .layer-card p {
+    min-height: 0;
+    margin-top: 6px;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.42;
+    border-left: 0;
+  }
+
+  .layer-number {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 420px) {
+  .architecture-section .container {
+    width: min(100% - 20px, 390px);
+  }
+
+  .architecture-section .section-title {
+    font-size: clamp(24px, 7.2vw, 30px);
+  }
+
+  .layer-card,
+  .layer-card:last-child {
+    grid-template-columns: 48px minmax(0, 1fr) 28px;
+    gap: 8px;
+  }
+
+  .layer-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .layer-card h3 {
+    font-size: 14px;
+  }
+
+  .layer-card p {
+    font-size: 13px;
+  }
+
+  .layer-number {
+    font-size: 24px;
+  }
+}
