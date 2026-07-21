@@ -23,16 +23,16 @@
       "continue": true
     },
     {
-      "src": "/assets/videos/(.*)",
+      "src": "/assets/(.*)",
       "headers": {
-        "cache-control": "public, max-age=31536000, immutable, no-transform"
+        "cache-control": "public, max-age=2592000, stale-while-revalidate=86400"
       },
       "continue": true
     },
     {
-      "src": "/assets/(.*)",
+      "src": "/assets/videos/(.*)",
       "headers": {
-        "cache-control": "public, max-age=2592000, stale-while-revalidate=86400"
+        "cache-control": "public, max-age=31536000, immutable, no-transform"
       },
       "continue": true
     },
