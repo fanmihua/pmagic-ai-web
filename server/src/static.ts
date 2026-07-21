@@ -85,6 +85,8 @@ function sendFile(reply: FastifyReply, root: string, relativePath: string, cache
 
 // 内容型静态资源（图片、视频、图标、PDF.js 库）：文件名稳定，缓存 30 天，过期后后台再验证。
 const ASSET_CACHE = "public, max-age=2592000, stale-while-revalidate=86400";
+// 透明 WebM 等视频必须保持编码字节不变；版本化 URL 负责缓存失效，no-transform 禁止代理转码。
+const VIDEO_CACHE = "public, max-age=31536000, immutable, no-transform";
 // 后台构建产物（Vite 带内容哈希）：可安全长期不可变缓存一年。
 const HASHED_CACHE = "public, max-age=31536000, immutable";
 // 用户上传文件（白皮书 PDF 等）：可能被后台更新，缓存 1 天。
@@ -114,7 +116,9 @@ export function registerStaticRoutes(app: FastifyInstance) {
 
   app.get("/assets/*", (request, reply) => {
     const wildcard = (request.params as { "*": string })["*"];
-    return sendFile(reply, path.join(paths.projectRoot, "assets"), wildcard, ASSET_CACHE);
+    const ext = path.extname(wildcard).toLowerCase();
+    const cacheControl = ext === ".webm" || ext === ".mp4" ? VIDEO_CACHE : ASSET_CACHE;
+    return sendFile(reply, path.join(paths.projectRoot, "assets"), wildcard, cacheControl);
   });
 
   app.get("/uploads/*", (request, reply) => {
